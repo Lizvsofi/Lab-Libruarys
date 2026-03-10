@@ -6,8 +6,8 @@ const app = express();
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root', // Tu contraseña
-  database: 'mydb' // <--- ¡PON AQUÍ EL NOMBRE DE TU BD!
+  password: 'root', // Contraseña
+  database: 'mydb' // Nombre de la base de datos
 });
 
 // 2. Conectar a la base de datos
@@ -27,7 +27,7 @@ app.get('/libros', (req, res) => {
     if (err) {
       return res.status(500).send('Error al consultar la base de datos');
     }
-    res.json(results); // Esto enviará los libros en formato JSON al navegador
+    res.json(results); 
   });
 });
 
