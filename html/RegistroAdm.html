@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Libruarys</title>
+        <link rel="shortcut icon" href="../logo.jpeg" type="image/x-icon">
+        <link rel="stylesheet" href="../css/AnaCSS.css">
+        <script src="../js/AnaJS.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+               <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    </head>
+<body>
+    <!--Responsive Menu-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../logo.jpeg" alt="Logo de Libruarys"/>
+            <span>Libruarys</span>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li class="dropdown"></li>
+            <!--Inicio con su icono-->
+            
+            <li>
+                <a href="index.html" class="active">
+                    <i class="fa fa-home" style="font-size:24px;color: #7f5539;"></i>Inicio
+                </a>
+            
+            </li>
+           
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+        }
+    </script>
+            <h1 class="subtitle">Inicio para Administradores</h1>
+    <div class="login-page">
+        <div class="login-container">
+            <img src="../logo1.png" class="background-logo"/>
+            <div class="login-content">
+                <form>
+                    <input type="text" placeholder="Numero de empleado" class="input-field">
+                    <input type="text" placeholder="Nombres" class="input-field">
+                    <input type="text" placeholder="Apellidos" class="input-field">
+                    <input type="email" placeholder="Correo" class="input-field">  
+                    <input type="password" id="pass1" placeholder="Crear Contraseña" class="input-field" required>
+                    <input type="password" id="pass2" placeholder="Repetir Contraseña" class="input-field" required>
+                    <div class="containerbnt">
+                        <a href="#" class="button" type="submit" onclick="return validarRegistro(event)">
+                        <span class="material-symbols-outlined">login</span>
+                        Iniciar Sesión
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
