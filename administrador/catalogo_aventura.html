@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Libruarys</title>
+    <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styless.css">
+    <script src="./js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
+        
+    <style>
+
+        body{
+            margin:0;
+            font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .fondo{
+            background-image: url("./img/logo_libreria.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            opacity: 0.20; 
+
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            }
+    </style>
+</head>
+<body>
+    <!--Responsive Menu-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <span>Libruarys</span>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+        <li class="dropdown"></li>
+        <!--Género con su icnono-->
+        <li class="dropdown">
+            <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
+            <a href="generos.html" onclick="toggleDropdown(event)" class="active"></a>
+            <li><a href="generos.html">Géneros</a></li>
+
+            <ul class="dropdown-menu" id="submenu">
+                <li><a href="catalogo_accion.html">Acción</a></li>
+                <li><a href="catalogo_terror.html">Terror</a></li>
+                <li><a href="catalogo_aventura.html">Aventura</a></li>
+                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
+                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
+                <li><a href="catalogo_drama.html">Drama</a></li>
+                <li><a href="catalogo_infantil.html">Infantil</a></li>
+                <li><a href="catalogo_misterio.html">Misterio</a></li>
+                <li><a href="catalogo_romance.html">Romance</a></li>
+            </ul>
+        </li>
+        <!--Carrito con su icono-->
+        <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
+        <li><a href="carrito.html">Compras</a></li>
+        <!--Contador carrito-->
+        <div class="carrito">
+            🛒 Carrito (<span id="contador-carrito">0</span>)
+        </div>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+        }
+    </script>
+
+    <div class="fondo"></div>
+
+    <h1>Catálogo Aventura</h1>
+
+    <div class="catalogo-accion">
+        <div class="tarjeta-libro" data-id="L-011">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-011</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/isla_tesoro.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La isla del tesoro</h3>
+                    <p class="precio">$251.30 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Robert Stevenson</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-012">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-012</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="/img/hobbit.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">El hobbit</h3>
+                    <p class="precio">$448.76 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">J.R.R. Tolkien</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-013">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-013</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="/img/viaje_centro.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Viaje al centro de la Tierra</h3>
+                    <p class="precio">$233.35 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Julio Verne</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-014">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-014</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/robinson.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Robinson Crusoe</h3>
+                    <p class="precio">$251.30 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Daniel Defoe</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-015">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-015</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/vuelta_80dias.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La vuelta al mundo en 80 días</h3>
+                    <p class="precio">$215.40 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Julio Verne</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-016">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-016</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/mundo_perdido.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">El mundo perdido</h3>
+                    <p class="precio">$233.35 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Arthur Conan Doyle</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-017">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-017</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/llamado_salvaje.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La llamada de lo salvaje</h3>
+                    <p class="precio">$269.25 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Jack London</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-018">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-018</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/vida_pi.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La vida de Pi</h3>
+                    <p class="precio">$323.10 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Yann Martel</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-019">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-019</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/hatchet.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Hatchet</h3>
+                    <p class="precio">$287.20 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">Gary Paulsen</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta-libro" data-id="L-020">
+
+            <div class="top-libro">
+                <span class="codigo-libro">L-020</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+
+            <img src="img/minas_salomon.jpg">
+
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Las minas del rey Salomón</h3>
+                    <p class="precio">$233.35 MXN</p>
+                </div>
+
+                <div>
+                    <p class="autor">H. Rider Haggard</p>
+                    <p class="editorial">Editorial</p>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+
+        </div>
+        
+    </div>
+    <div id="mensaje-carrito" class="mensaje-carrito">
+        ✔ Libro agregado al carrito
+    </div>
+</body>
+</html>
