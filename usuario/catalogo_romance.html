@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Libruarys</title>
+    <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styless.css">
+    <script src="./js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
+        
+    <style>
+
+        body{
+            margin:0;
+            font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .fondo{
+            background-image: url("./img/logo_libreria.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            opacity: 0.20; 
+
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            }
+    </style>
+</head>
+<body>
+    <!--Responsive Menu-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <span>Libruarys</span>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+        <li class="dropdown"></li>
+        <!--Género con su icnono-->
+        <li class="dropdown">
+            <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
+            <a href="generos.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
+
+            <ul class="dropdown-menu" id="submenu">
+                <li><a href="catalogo_accion.html">Acción</a></li>
+                <li><a href="catalogo_terror.html">Terror</a></li>
+                <li><a href="catalogo_aventura.html">Aventura</a></li>
+                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
+                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
+                <li><a href="catalogo_drama.html">Drama</a></li>
+                <li><a href="catalogo_infantil.html">Infantil</a></li>
+                <li><a href="catalogo_misterio.html">Misterio</a></li>
+                <li><a href="catalogo_romance.html">Romance</a></li>
+            </ul>
+        </li>
+        <!--Carrito con su icono-->
+        <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
+        <li><a href="carrito.html">Compras</a></li>
+        <!--Contador carrito-->
+        <div class="carrito">
+            🛒 Carrito (<span id="contador-carrito">0</span>)
+        </div>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+        }
+    </script>
+
+    <div class="fondo"></div>
+
+    <h1>Catálogo Romance</h1>
+
+    <div class="catalogo-accion">
+
+        <div class="tarjeta-libro">
+            <img src="img/orgullo_prejuicio.jpg">
+            <h3>Orgullo y prejuicio</h3>
+            <p class="autor">Jane Austen</p>
+            <p class="precio">$323.10 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="/img/cuaderno_noah.jpg">
+            <h3>El cuaderno de Noah</h3>
+            <p class="autor">Nicholas Sparks</p>
+            <p class="precio">$305.15 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="/img/yo_antes_de_ti.jpg">
+            <h3>Yo antes de ti</h3>
+            <p class="autor">Jojo Moyes</p>
+            <p class="precio">$341.05 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/crepusculo.jpg">
+            <h3>Crepúsculo</h3>
+            <p class="autor">Stephenie Meyer</p>
+            <p class="precio">$323.10 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/jane_eyre.jpg">
+            <h3>Jane Eyre</h3>
+            <p class="autor">Charlotte Brontë</p>
+            <p class="precio">$269.25 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/bajo_la_misma_estrella.jpg">
+            <h3>Bajo la misma estrella</h3>
+            <p class="autor">John Green</p>
+            <p class="precio">$323.10 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/love_story.jpg">
+            <h3>Love Story</h3>
+            <p class="autor">Erich Segal</p>
+            <p class="precio">$287.20 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/mujer_viajero_tiempo.jpg">
+            <h3>La mujer del viajero en el tiempo</h3>
+            <p class="autor">Audrey Niffenegger</p>
+            <p class="precio">$305.15 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/duque_y_yo.jpg">
+            <h3>El duque y yo</h3>
+            <p class="autor">Julia Quinn</p>
+            <p class="precio">$323.10 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro">
+            <img src="img/te_amo.jpg">
+            <h3>Posdata: te amo</h3>
+            <p class="autor">Cecelia Ahern</p>
+            <p class="precio">$305.15 MXN</p>
+
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+    </div>
+    <div id="mensaje-carrito" class="mensaje-carrito">
+        ✔ Libro agregado al carrito
+    </div>
+</body>
+</html>
