@@ -3,19 +3,18 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Libruarys</title>
+        <title>Libruarys - Registro</title>
         <link rel="shortcut icon" href="../img/logo.jpeg" type="image/x-icon">
         <link rel="stylesheet" href="../css/AnaCSS.css">
         <script src="../js/AnaJS.js"></script>
+        
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-               <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
 <body>
-    <!--Responsive Menu-->
     <nav class="navbar">
         <div class="logo">
             <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
@@ -27,64 +26,60 @@
         </div>
 
         <ul class="nav-links" id="navLinks">
-            <li class="dropdown"></li>
-            <!--Inicio con su icono-->
-            
             <li>
                 <a href="index.html" class="active">
-                    <i class="fa fa-home" style="font-size:24px;color: #7f5539;"></i>Inicio
+                    <i class="fa fa-home" style="font-size:24px;color: #7f5539;"></i> Inicio
                 </a>
-            
             </li>
-           
         </ul>
     </nav>
 
     <script>
         function toggleMenu(){
-        document.getElementById("navLinks").classList.toggle("active");
+            document.getElementById("navLinks").classList.toggle("active");
         }
     </script>
-            <h1 class="subtitle">Crear Cuenta</h1>
+
+    <h1 class="subtitle">Crear Cuenta</h1>
     <div class="login-page">
         <div class="login-container">
             <img src="../img/logo1.png" class="background-logo"/>
             <div class="login-content">
                 <form class="form" onsubmit="return validarRegistro(event)">
-                <input type="text" placeholder="Nombres" class="input-field" required>
-                <input type="text" placeholder="Apellidos" class="input-field" required>
+                    <input type="text" id="nombre" placeholder="Nombres" class="input-field" required>
+                    <input type="text" id="apellidos" placeholder="Apellidos" class="input-field" required>
 
-                <input type="tel" placeholder="Teléfono" class="input-field" required>
-                <input type="email" placeholder="Correo" class="input-field" required>
+                    <input type="tel" id="telefono" placeholder="Teléfono" class="input-field" required>
+                    <input type="email" id="correo" placeholder="Correo" class="input-field" required>
 
-                <div class="input-group">
-                    <label class="subtitle1" for="fecha_nacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="input-field" required>
-                </div>
-
-                <div class="input-group">
-                    <label class="subtitle1" for="CodigoPostal">Código Postal</label>
-                    <input type="text" id="CodigoPostal" name="CodigoPostal" class="input-field" placeholder="Ej. 64000" inputmode="numeric" maxlength="5" required>
-                </div>
-
-                <div class="input-group full-width">
-                    <label class="subtitle1" for="Direccion">Dirección de Domicilio</label>
-                    <input type="text" id="Direccion" name="Dirección" class="input-field" placeholder="Calle, número y colonia" required>
-                </div>
-
-                <input type="password" id="pass1" placeholder="Crear Contraseña" class="input-field" required>
-                <input type="password" id="pass2" placeholder="Repetir Contraseña" class="input-field" required>
-
-                <div class="full-width">
-                    <p class="Content">Al Registrarte aceptas que te enviemos recomendaciones de libros...</p>
-                    <div class="containerbnt">
-                        <button type="submit" class="button" >
-                            <span class="material-symbols-outlined">how_to_reg</span>
-                            Finalizar Registro
-                        </button>
+                    <div class="input-group">
+                        <label class="subtitle1" for="fecha_nacimiento">Fecha de Nacimiento</label>
+                        <input type="date" id="fechaNacimiento" name="fecha_nacimiento" class="input-field" required>
                     </div>
-                </div>
-          </form>
+
+                    <div class="input-group">
+                        <label class="subtitle1" for="CodigoPostal">Código Postal</label>
+                        <input type="text" id="codigoPostal" name="CodigoPostal" class="input-field" placeholder="Ej. 64000" inputmode="numeric" maxlength="5" required>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label class="subtitle1" for="Direccion">Dirección de Domicilio</label>
+                        <input type="text" id="direccion" name="Dirección" class="input-field" placeholder="Calle, número y colonia" required>
+                    </div>
+
+                    <input type="password" id="pass1" placeholder="Crear Contraseña" class="input-field" required>
+                    <input type="password" id="pass2" placeholder="Repetir Contraseña" class="input-field" required>
+
+                    <div class="full-width">
+                        <p class="Content">Al Registrarte aceptas que te enviemos recomendaciones de libros...</p>
+                        <div class="containerbnt">
+                            <button type="submit" class="button">
+                                <span class="material-symbols-outlined">how_to_reg</span>
+                                Finalizar Registro
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
