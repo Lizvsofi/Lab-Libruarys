@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Libruarys</title>
+    <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styless.css">
+    <script src="./js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
+        
+    <style>
+
+        body{
+            margin:0;
+            font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .fondo{
+            background-image: url("./img/logo_libreria.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            opacity: 0.20; 
+
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            }
+    </style>
+</head>
+<body>
+    <!--Responsive Menu-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <span>Libruarys</span>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+        <li class="dropdown"></li>
+        <!--Género con su icnono-->
+        <li class="dropdown">
+            <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
+            <a href="generos.html" onclick="toggleDropdown(event)" class="active"></a>
+            <li><a href="generos.html">Géneros</a></li>
+
+            <ul class="dropdown-menu" id="submenu">
+                <li><a href="catalogo_accion.html">Acción</a></li>
+                <li><a href="catalogo_terror.html">Terror</a></li>
+                <li><a href="catalogo_aventura.html">Aventura</a></li>
+                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
+                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
+                <li><a href="catalogo_drama.html">Drama</a></li>
+                <li><a href="catalogo_infantil.html">Infantil</a></li>
+                <li><a href="catalogo_misterio.html">Misterio</a></li>
+                <li><a href="catalogo_romance.html">Romance</a></li>
+            </ul>
+        </li>
+        <!--Carrito con su icono-->
+        <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
+        <li><a href="carrito.html">Compras</a></li>
+        <!--Contador carrito-->
+        <div class="carrito">
+            🛒 Carrito (<span id="contador-carrito">0</span>)
+        </div>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+        }
+    </script>
+
+    <div class="fondo"></div>
+
+    <h1>Catálogo Infantil</h1>
+
+    <div class="catalogo-accion">
+
+        <div class="tarjeta-libro" data-id="L-051">
+            <div class="top-libro">
+                <span class="codigo-libro">L-051</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/harry_potter.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Harry Potter y la piedra filosofal</h3>
+                    <p class="precio">$304.90 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">J.K. Rowling</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-052">
+            <div class="top-libro">
+                <span class="codigo-libro">L-052</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/telaraña_carlota.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La telaraña de Carlota</h3>
+                    <p class="precio">$269.25 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">E.B. White</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-053">
+            <div class="top-libro">
+                <span class="codigo-libro">L-053</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/matilda.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Matilda</h3>
+                    <p class="precio">$251.30 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Roald Dahi</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-054">
+            <div class="top-libro">
+                <span class="codigo-libro">L-054</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/gato.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">El gato ensombrerado</h3>
+                    <p class="precio">$233.35 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Dr. Seuss</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-055">
+            <div class="top-libro">
+                <span class="codigo-libro">L-055</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/monstruos.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Donde viven los monstruos</h3>
+                    <p class="precio">$287.20 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Maurice Sendak</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-056">
+            <div class="top-libro">
+                <span class="codigo-libro">L-056</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/grufalo.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">El grúfalo</h3>
+                    <p class="precio">$269.25 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Julia Donaldson</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-057">
+            <div class="top-libro">
+                <span class="codigo-libro">L-057</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/diario_greg.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Diario de Greg</h3>
+                    <p class="precio">$287.20 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Jeff Kinney</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-058">
+            <div class="top-libro">
+                <span class="codigo-libro">L-058</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/percy.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Percy Jackson y el ladrón del rayo</h3>
+                    <p class="precio">$323.10 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Rick Riordan</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-059">
+            <div class="top-libro">
+                <span class="codigo-libro">L-059</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/oruga.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">La oruga muy hambrienta</h3>
+                    <p class="precio">$215.40 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Eric Carle</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+
+        <div class="tarjeta-libro" data-id="L-060">
+            <div class="top-libro">
+                <span class="codigo-libro">L-060</span>
+                <button class="editar-libro">Editar</button>
+            </div>
+            <img src="img/alicia_maravillas.jpg">
+            <div class="info-libro">
+                <div>
+                    <h3 class="nombre-libro">Alicia en el país de las maravillas</h3>
+                    <p class="precio">$251.30 MXN</p>
+                </div>
+                <div>
+                    <p class="autor">Lewis Carroll</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button class="cantidad">Cantidad 10</button>
+                <button class="agregar">Agregar</button>
+            </div>
+        </div>
+    </div>
+    <div id="mensaje-carrito" class="mensaje-carrito">
+        ✔ Libro agregado al carrito
+    </div>
+</body>
+</html>
