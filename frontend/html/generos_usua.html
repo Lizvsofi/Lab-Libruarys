@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Libruarys</title>
-        <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
-        <link rel="stylesheet" href="./css/styless.css">
-        <script src="./js/script.js"></script>
+        <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
+        <link rel="stylesheet" href="../css/styless_usua.css">
+        <script src="../js/script_usua.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,13 +20,13 @@
             }
 
             .fondo{
-            background-image: url("./img/logo_libreria.jpeg");
+            background-image: url("../img/logo.jpeg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
 
-            opacity: 0.20; 
+            opacity: 0.30; 
 
             position: fixed;
             width: 100%;
@@ -39,7 +39,7 @@
     <!--Responsive Menu-->
     <nav class="navbar">
         <div class="logo">
-            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
             <span>Libruarys</span>
         </div>
 
@@ -52,23 +52,26 @@
         <!--Género con su icnono-->
         <li class="dropdown">
             <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-            <a href="./generos.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
+            <a href="../html/generos_usua.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
 
             <ul class="dropdown-menu" id="submenu">
-                <li><a href="catalogo_accion.html">Acción</a></li>
-                <li><a href="catalogo_terror.html">Terror</a></li>
-                <li><a href="catalogo_aventura.html">Aventura</a></li>
-                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
-                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
-                <li><a href="catalogo_drama.html">Drama</a></li>
-                <li><a href="catalogo_infantil.html">Infantil</a></li>
-                <li><a href="catalogo_misterio.html">Misterio</a></li>
-                <li><a href="catalogo_romance.html">Romance</a></li>
+                <li><a href="../html/catalogo_accion_usua.html">Acción</a></li>
+                <li><a href="../html/catalogo_terror_usua.html">Terror</a></li>
+                <li><a href="../html/catalogo_aventura_usua.html">Aventura</a></li>
+                <li><a href="../html/catalogo_ciencia_ficcion_usua.html">Ciencia Ficción</a></li>
+                <li><a href="../html/catalogo_suspenso_usua.html">Suspenso</a></li>
+                <li><a href="../html/catalogo_drama_usua.html">Drama</a></li>
+                <li><a href="../html/catalogo_infantil_usua.html">Infantil</a></li>
+                <li><a href="../html/catalogo_misterio_usua.html">Misterio</a></li>
+                <li><a href="../html/catalogo_romance_usua.html">Romance</a></li>
             </ul>
-        </li> 
-        <!--Carrito con su icono-->
+        </li>
         <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
-        <li><a href="carrito.html">Carrito</a></li>
+        <li>
+        <a href="../html/carrito_usua.html">
+            Carrito <span id="contador-carrito">0</span>
+        </a>
+        </li>
         </ul>
     </nav>
 
@@ -86,48 +89,48 @@
     <!--Todos los géneros-->
     <div class="contenedor-generos">
 
-        <a href="catalogo_accion.html" class="card">
-            <img src="./img/accion.jpg" class="card img">
+        <a href="../html/catalogo_accion_usua.html" class="card">
+            <img src="../img/accion.jpg" class="card img">
             <div class="titulo">Acción</div>
         </a>
 
-        <a href="catalogo_terror.html" class="card">
-            <img src="./img/terror.jpg">
+        <a href="../html/catalogo_terror_usua.html" class="card">
+            <img src="../img/terror.jpg">
             <div class="titulo">Terror</div>
         </a>
 
-        <a href="catalogo_aventura.html" class="card">
-            <img src="./img/aventura.png">
+        <a href="../html/catalogo_aventura_usua.html" class="card">
+            <img src="../img/aventura.png">
             <div class="titulo">Aventura</div>
         </a>
 
-        <a href="catalogo_ciencia_ficcion.html" class="card">
-            <img src="./img/ciencia_ficcion.jpg">
+        <a href="../html/catalogo_ciencia_ficcion_usua.html" class="card">
+            <img src="../img/ciencia_ficcion.jpg">
             <div class="titulo">Ciencia Ficción</div>
         </a>
 
-        <a href="catalogo_suspenso.html" class="card">
-            <img src="./img/suspenso.jpg">
+        <a href="../html/catalogo_suspenso_usua.html" class="card">
+            <img src="../img/suspenso.jpg">
             <div class="titulo">Suspenso</div>
         </a>
 
-        <a href="catalogo_drama.html" class="card">
-            <img src="./img/drama.jpg">
+        <a href="../html/catalogo_drama_usua.html" class="card">
+            <img src="../img/drama.jpg">
             <div class="titulo">Drama</div>
         </a>
 
-        <a href="catalogo_infantil.html" class="card">
-            <img src="./img/infantil.jpg">
+        <a href="../html/catalogo_infantil_usua.html" class="card">
+            <img src="../img/infantil.jpg">
             <div class="titulo">Infantil</div>
         </a>
 
-        <a href="catalogo_misterio.html" class="card">
-            <img src="./img/misterio.jpg">
+        <a href="../html/catalogo_misterio_usua.html" class="card">
+            <img src="../img/misterio.jpg">
             <div class="titulo">Misterio</div>
         </a>
 
-        <a href="catalogo_romance.html" class="card">
-            <img src="./img/romance.jpg">
+        <a href="../html/catalogo_romance_usua.html" class="card">
+            <img src="../img/romance.jpg">
             <div class="titulo">Romance</div>
         </a>
 

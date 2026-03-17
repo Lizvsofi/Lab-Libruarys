@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Libruarys</title>
-    <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
-    <link rel="stylesheet" href="./css/styless.css">
-    <script src="./js/script.js"></script>
+    <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styless_usua.css">
+    <script src="../js/script_usua.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,13 +21,13 @@
             }
 
             .fondo{
-            background-image: url("./img/logo_libreria.jpeg");
+            background-image: url("../img/logo.jpeg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
 
-            opacity: 0.20; 
+            opacity: 0.30; 
 
             position: fixed;
             width: 100%;
@@ -40,7 +40,7 @@
     <!--Responsive Menu-->
     <nav class="navbar">
         <div class="logo">
-            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
             <span>Libruarys</span>
         </div>
 
@@ -53,27 +53,26 @@
         <!--Género con su icnono-->
         <li class="dropdown">
             <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-            <a href="generos.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
+            <a href="../html/generos_usua.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
 
             <ul class="dropdown-menu" id="submenu">
-                <li><a href="catalogo_accion.html">Acción</a></li>
-                <li><a href="catalogo_terror.html">Terror</a></li>
-                <li><a href="catalogo_aventura.html">Aventura</a></li>
-                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
-                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
-                <li><a href="catalogo_drama.html">Drama</a></li>
-                <li><a href="catalogo_infantil.html">Infantil</a></li>
-                <li><a href="catalogo_misterio.html">Misterio</a></li>
-                <li><a href="catalogo_romance.html">Romance</a></li>
+                <li><a href="../html/catalogo_accion_usua.html">Acción</a></li>
+                <li><a href="../html/catalogo_terror_usua.html">Terror</a></li>
+                <li><a href="../html/catalogo_aventura_usua.html">Aventura</a></li>
+                <li><a href="../html/catalogo_ciencia_ficcion_usua.html">Ciencia Ficción</a></li>
+                <li><a href="../html/catalogo_suspenso_usua.html">Suspenso</a></li>
+                <li><a href="../html/catalogo_drama_usua.html">Drama</a></li>
+                <li><a href="../html/catalogo_infantil_usua.html">Infantil</a></li>
+                <li><a href="../html/catalogo_misterio_usua.html">Misterio</a></li>
+                <li><a href="../html/catalogo_romance_usua.html">Romance</a></li>
             </ul>
         </li>
-        <!--Carrito con su icono-->
         <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
-        <li><a href="carrito.html">Compras</a></li>
-        <!--Contador carrito-->
-        <div class="carrito">
-            🛒 Carrito (<span id="contador-carrito">0</span>)
-        </div>
+        <li>
+        <a href="../html/carrito_usua.html">
+            Carrito <span id="contador-carrito">0</span>
+        </a>
+        </li>
         </ul>
     </nav>
 
@@ -90,7 +89,7 @@
     <div class="catalogo-accion">
 
         <div class="tarjeta-libro">
-            <img src="img/orgullo_prejuicio.jpg">
+            <img src="../img/orgullo_prejuicio.jpg">
             <h3>Orgullo y prejuicio</h3>
             <p class="autor">Jane Austen</p>
             <p class="precio">$323.10 MXN</p>
@@ -102,7 +101,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/cuaderno_noah.jpg">
+            <img src="../img/cuaderno_noah.jpg">
             <h3>El cuaderno de Noah</h3>
             <p class="autor">Nicholas Sparks</p>
             <p class="precio">$305.15 MXN</p>
@@ -114,7 +113,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/yo_antes_de_ti.jpg">
+            <img src="../img/yo_antes_de_ti.jpg">
             <h3>Yo antes de ti</h3>
             <p class="autor">Jojo Moyes</p>
             <p class="precio">$341.05 MXN</p>
@@ -126,7 +125,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/crepusculo.jpg">
+            <img src="../img/crepusculo.jpg">
             <h3>Crepúsculo</h3>
             <p class="autor">Stephenie Meyer</p>
             <p class="precio">$323.10 MXN</p>
@@ -138,7 +137,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/jane_eyre.jpg">
+            <img src="../img/jane_eyre.jpg">
             <h3>Jane Eyre</h3>
             <p class="autor">Charlotte Brontë</p>
             <p class="precio">$269.25 MXN</p>
@@ -150,7 +149,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/bajo_la_misma_estrella.jpg">
+            <img src="../img/bajo_la_misma_estrella.jpg">
             <h3>Bajo la misma estrella</h3>
             <p class="autor">John Green</p>
             <p class="precio">$323.10 MXN</p>
@@ -162,7 +161,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/love_story.jpg">
+            <img src="../img/love_story.jpg">
             <h3>Love Story</h3>
             <p class="autor">Erich Segal</p>
             <p class="precio">$287.20 MXN</p>
@@ -174,7 +173,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/mujer_viajero_tiempo.jpg">
+            <img src="../img/mujer_viajero_tiempo.jpg">
             <h3>La mujer del viajero en el tiempo</h3>
             <p class="autor">Audrey Niffenegger</p>
             <p class="precio">$305.15 MXN</p>
@@ -186,7 +185,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/duque_y_yo.jpg">
+            <img src="../img/duque_y_yo.jpg">
             <h3>El duque y yo</h3>
             <p class="autor">Julia Quinn</p>
             <p class="precio">$323.10 MXN</p>
@@ -198,7 +197,7 @@
         </div>
 
         <div class="tarjeta-libro">
-            <img src="img/te_amo.jpg">
+            <img src="../img/te_amo.jpg">
             <h3>Posdata: te amo</h3>
             <p class="autor">Cecelia Ahern</p>
             <p class="precio">$305.15 MXN</p>

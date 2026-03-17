@@ -38,6 +38,7 @@ const mensaje = document.getElementById("mensaje-carrito");
 contador.textContent = carrito.length;
 
 const botones = document.querySelectorAll(".agregar");
+console.log("botones:", botones.length);
 
 botones.forEach((boton)=>{
 

@@ -35,9 +35,12 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const contador = document.getElementById("contador-carrito");
 const mensaje = document.getElementById("mensaje-carrito");
 
-contador.textContent = carrito.length;
+if(contador){
+  contador.textContent = carrito.length;
+}
 
 const botones = document.querySelectorAll(".agregar");
+console.log("botones:", botones.length);
 
 botones.forEach((boton)=>{
 
@@ -56,7 +59,13 @@ carrito.push(libro);
 localStorage.setItem("carrito",JSON.stringify(carrito));
 
 contador.textContent = carrito.length;
-mensaje.classList.add("mostrar");
+if(mensaje){
+  mensaje.classList.add("mostrar");
+
+  setTimeout(()=>{
+    mensaje.classList.remove("mostrar");
+  },2000);
+}
 
 setTimeout(()=>{
 mensaje.classList.remove("mostrar");
