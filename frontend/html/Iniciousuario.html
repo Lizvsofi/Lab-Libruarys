@@ -3,21 +3,21 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Libruarys</title>
+        <title>Libruarys - Inicio de Sesión</title>
         <link rel="shortcut icon" href="../img/logo.jpeg" type="image/x-icon">
         <link rel="stylesheet" href="../css/AnaCSS.css">
         <script src="../js/AnaJS.js"></script>
+        
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-               <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="../igm/logo.jpeg" alt="Logo de Libruarys"/>
+            <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
             <span>Libruarys</span>
         </div>
 
@@ -34,19 +34,15 @@
         </ul>
     </nav>
 
-    <script>
-        function toggleMenu(){
-        document.getElementById("navLinks").classList.toggle("active");
-        }
-    </script>
-            <h1 class="subtitle">Inicio</h1>
+    <h1 class="subtitle">Inicio</h1>
     <div class="login-page">
         <div class="login-container">
             <img src="../img/logo1.png" class="background-logo"/>
             <div class="login-content">
-                <form>
-                    <input type="text" placeholder="Correo" class="input-field">
-                    <input type="password" placeholder="Contraseña" class="input-field">
+                <form id="loginForm">
+                    <input type="text" id="correoLogin" placeholder="Correo" class="input-field" required>
+                    <input type="password" id="passLogin" placeholder="Contraseña" class="input-field" required>
+                    
                     <div class="containerbnt">
                         <button type="submit" class="button" style="border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 20px; width: 100%;">
                             <span class="material-symbols-outlined">login</span>
@@ -76,32 +72,29 @@
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const correo = document.getElementById('correoLogin').value;
-        const contraseña = document.getElementById('passLogin').value;
+        const contrasena = document.getElementById('passLogin').value;
 
         try {
             const response = await fetch('http://localhost:8080/api/usuarios/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ correo, contraseña })
+                body: JSON.stringify({ correo, contrasena }) 
             });
 
             if (response.ok) {
                 const usuarioEncontrado = await response.json();
                 alert("¡Bienvenido a Libruarys, " + usuarioEncontrado.nombre + "!");
-                
-                // ACTUALIZACIÓN DE RUTA:
-                // Salimos de /html/ y entramos a /usuario/ para cargar el catálogo principal
-                window.location.href = "../usuario/catalogo_accion.html"; 
+                window.location.href = "generos_usua.html"; 
             } else {
-                alert("Correo o contraseña incorrectos.");
+                const errorData = await response.json();
+                alert(errorData.error || "Correo o contraseña incorrectos.");
             }
         } catch (error) {
             console.error("Error:", error);
             alert("Error al conectar con el servidor.");
         }
     });
-</script>
+    </script>
 </body>
 </html>

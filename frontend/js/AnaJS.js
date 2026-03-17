@@ -1,67 +1,74 @@
-function toggleMenu() {
-  const menu = document.getElementById("navLinks");
-  menu.classList.toggle("active");
-}
-
-function toggleDropdown(event) {
-  event.preventDefault(); 
-  document.getElementById("submenu").classList.toggle("show");
-}
-
-// ESTA ES LA FUNCIÓN QUE VAMOS A ACTUALIZAR PARA CONECTAR CON JAVA
 async function validarRegistro(event) {
-    event.preventDefault(); // Evitamos que la página se recargue inmediatamente
+    event.preventDefault(); 
 
     const pass1 = document.getElementById("pass1").value;
     const pass2 = document.getElementById("pass2").value;
 
-    // 1. Validación de contraseñas
     if (pass1 !== pass2) {
         alert("Las contraseñas no coinciden. Por favor, verifica.");
         return false;
     }
 
-    // 2. Captura de todos los datos del formulario (deben coincidir con Usuario.java)
-    const usuarioData = {
-        nombre: document.querySelector('input[id="nombre"]').value,
-        apellidos: document.querySelector('input[id="apellidos"]').value,
-        correo: document.querySelector('input[id="correo"]').value,
-        telefono: document.querySelector('input[id="telefono"]').value,
-        fechaNacimiento: document.querySelector('input[id="fechaNacimiento"]').value,
-        direccion: document.querySelector('input[id="direccion"]').value,
-        codigoPostal: document.querySelector('input[id="codigoPostal"]').value,
-        contraseña: pass1
-    };
+    // En tu archivo AnaJS.js, el objeto debe verse así:
+const usuarioData = {
+    nombre: document.getElementById("nombre").value,
+    apellidos: document.getElementById("apellidos").value,
+    correo: document.getElementById("correo").value,
+    telefono: document.getElementById("telefono").value,
+    fechaNacimiento: document.getElementById("fechaNacimiento").value,
+    direccion: document.getElementById("direccion").value,
+    codigoPostal: document.getElementById("codigoPostal").value,
+    contrasena: pass1 // <-- ASEGÚRATE DE QUE AQUÍ DIGA 'contrasena'
+};
 
     try {
-        // 3. Envío de datos al Backend de Spring Boot
         const response = await fetch('http://localhost:8080/api/usuarios/registro', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(usuarioData)
         });
 
         if (response.ok) {
             alert("¡Registro exitoso! Ya estás en la base de datos de Libruarys.");
-            window.location.href = "Iniciousuario.html"; // Nos lleva a la página de usuario
+            window.location.href = "Iniciousuario.html"; 
         } else {
-            alert("Error al guardar en la base de datos. Código: " + response.status);
+            const errorData = await response.json();
+            alert("Error: " + (errorData.error || "No se pudo registrar el usuario"));
         }
     } catch (error) {
-        console.error("Error:", error);
-        alert("No se pudo conectar con el servidor Java. Asegúrate de que esté corriendo.");
+        console.error("Error de conexión:", error);
+        alert("No hay conexión con el servidor. Verifica que Spring Boot esté activo.");
     }
 }
 
-// Validación para editar perfil
-function confirmarCambios(event) {
+async function validarLogin(event) {
     event.preventDefault();
-    const pass1 = document.getElementById("pass1").value;
-    const pass2 = document.getElementById("pass2").value;
 
-    if (pass1 !== pass2) {
-        alert("Las contraseñas no coinciden. Por favor, verifica.");
-        return;
+    const datos = {
+    nombre: document.getElementById("nombre").value,
+    // ... otros campos ...
+    contrasena: document.getElementById("pass1").value // Asegúrate de que sea 'contrasena'
+};
+
+    try {
+        const response = await fetch('http://localhost:8080/api/usuarios/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosLogin)
+        });
+
+        if (response.ok) {
+            const usuario = await response.json();
+            alert("¡Bienvenido, " + usuario.nombre + "!");
+            localStorage.setItem("nombreUsuario", usuario.nombre);
+            window.location.href = "catalogo_accion_usua.html";
+        } else {
+            alert("Correo o contraseña incorrectos.");
+        }
+    } catch (error) {
+        alert("Error al conectar con el servidor.");
     }
-    alert("¡Tus cambios han sido guardados exitosamente!");
 }

@@ -3,29 +3,47 @@ package com.libruarys.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "libros") // Nombre de la tabla en MySQL
+@Table(name = "libros")
 public class Libro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_libro") // Nombre exacto en MySQL
+    @Column(name = "id_libro")
     private Integer id;
 
-    @Column(name = "nombre") // En tu DB se llama 'nombre'
+    @Column(name = "nombre", nullable = false)
     private String titulo;
 
+    @Column(nullable = false)
     private String autor;
-    
+
     private String categoria;
-    
+
+    @Column(nullable = false)
     private Double precio;
 
-    // Estos campos existen en tu MySQL, los agrego por si los necesitas
     private String edicion;
     private String editorial;
 
+    // Campo para la ruta de la imagen (ej: "img/it.jpg")
+    @Column(name = "imagen")
+    private String imagen;
+
+    // Campo para el inventario/stock que aparece en tus archivos HTML
+    @Column(name = "cantidad")
+    private Integer cantidad;
+
     // Constructor vacío (obligatorio para JPA)
     public Libro() {}
+
+    // Constructor con parámetros para facilitar pruebas
+    public Libro(String titulo, String autor, Double precio, String categoria, Integer cantidad) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.precio = precio;
+        this.categoria = categoria;
+        this.cantidad = cantidad;
+    }
 
     // Getters y Setters
     public Integer getId() { return id; }
@@ -48,4 +66,10 @@ public class Libro {
 
     public String getEditorial() { return editorial; }
     public void setEditorial(String editorial) { this.editorial = editorial; }
+
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+
+    public Integer getCantidad() { return cantidad; }
+    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
 }
