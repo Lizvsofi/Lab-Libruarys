@@ -206,6 +206,7 @@ html, body {
   font-family:poppins, sans-serif;
   text-align: center;
   margin-top: 20px;
+  margin-bottom: 50px;
 
 }
 /* Estilos para el contenedor de Logo */
@@ -416,6 +417,29 @@ input:focus {
     margin: 0 auto;                 /* Centra el formulario */
 }
 
+/* Contenedor para agrupar label e input */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px; /* Esto empuja el grupo hacia abajo */
+}
+
+.subtitle1 {
+  display: block;
+  margin-bottom: 8px;
+  color: #B8860B;
+  font-weight: bold;
+  font-family:poppins, sans-serif;
+  text-align: left;
+  
+}
+.input-field {
+    margin: 10px 0; /* Ajustamos el margen  */
+}
+
+.full-width {
+    grid-column: span 2;
+}
 
 /* Estilos del Footer */
 
