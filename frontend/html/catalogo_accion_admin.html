@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Libruarys</title>
-    <link rel="shortcut icon" href="./img/logo_libreria.jpeg" type="image/x-icon">
-    <link rel="stylesheet" href="./css/styless.css">
-    <script src="./js/script.js"></script>
+    <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styless_admin.css">
+    <script src="../js/script_admin.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,13 +21,13 @@
             }
 
             .fondo{
-            background-image: url("./img/logo_libreria.jpeg");
+            background-image: url("../img/logo.jpeg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
 
-            opacity: 0.20; 
+            opacity: 0.30; 
 
             position: fixed;
             width: 100%;
@@ -40,7 +40,7 @@
     <!--Responsive Menu-->
     <nav class="navbar">
         <div class="logo">
-            <img src="./img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+            <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
             <span>Libruarys</span>
         </div>
 
@@ -53,28 +53,27 @@
         <!--Género con su icnono-->
         <li class="dropdown">
             <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-            <a href="generos.html" onclick="toggleDropdown(event)" class="active"></a>
-            <li><a href="generos.html">Géneros</a></li>
+            <a href="../html/generos_admin.html" onclick="toggleDropdown(event)" class="active"></a>
+            <li><a href="../html/generos_admin.html">Géneros</a></li>
 
             <ul class="dropdown-menu" id="submenu">
-                <li><a href="catalogo_accion.html">Acción</a></li>
-                <li><a href="catalogo_terror.html">Terror</a></li>
-                <li><a href="catalogo_aventura.html">Aventura</a></li>
-                <li><a href="catalogo_ciencia_ficcion.html">Ciencia Ficción</a></li>
-                <li><a href="catalogo_suspenso.html">Suspenso</a></li>
-                <li><a href="catalogo_drama.html">Drama</a></li>
-                <li><a href="catalogo_infantil.html">Infantil</a></li>
-                <li><a href="catalogo_misterio.html">Misterio</a></li>
-                <li><a href="catalogo_romance.html">Romance</a></li>
+                <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
+                <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
+                <li><a href="../html/catalogo_aventura_admin.html">Aventura</a></li>
+                <li><a href="../html/catalogo_ciencia_ficcion_admin.html">Ciencia Ficción</a></li>
+                <li><a href="../html/catalogo_suspenso_admin.html">Suspenso</a></li>
+                <li><a href="../html/catalogo_drama_admin.html">Drama</a></li>
+                <li><a href="../html/catalogo_infantil_admin.html">Infantil</a></li>
+                <li><a href="../html/catalogo_misterio_admin.html">Misterio</a></li>
+                <li><a href="../html/catalogo_romance_admin.html">Romance</a></li>
             </ul>
         </li>
-        <!--Carrito con su icono-->
-        <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
-        <li><a href="carrito.html">Pedidos</a></li>
-        <!--Contador carrito-->
-        <div class="carrito">
-            🛒 Carrito (<span id="contador-carrito">0</span>)
-        </div>
+            <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
+        <li>
+        <a href="../html/carrito_admin.html">
+            Carrito <span id="contador-carrito">0</span>
+        </a>
+        </li>
         </ul>
     </nav>
 
@@ -97,7 +96,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/bourne_identity.jpg">
+        <img src="../img/bourne_identity.jpg">
 
         <div class="info-libro">
             <div>
@@ -125,7 +124,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/casino_royale.jpg">
+        <img src="../img/casino_royale_u.jpg">
 
         <div class="info-libro">
             <div>
@@ -153,7 +152,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/juegos_patriotas.jpg">
+        <img src="../img/juegos_patriotas.jpg">
 
         <div class="info-libro">
             <div>
@@ -181,7 +180,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/octubre_rojo.jpg">
+        <img src="../img/octubre_rojo.jpg">
 
         <div class="info-libro">
             <div>
@@ -209,7 +208,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/first_blood.jpg">
+        <img src="../img/first_blood.jpg">
 
         <div class="info-libro">
             <div>
@@ -237,7 +236,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/maze_runner.jpg">
+        <img src="../img/maze_runner.jpg">
 
         <div class="info-libro">
             <div>
@@ -265,7 +264,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/player_one.jpg">
+        <img src="../img/player_one.jpg">
 
         <div class="info-libro">
             <div>
@@ -293,7 +292,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/zona_peligrosa.jpg">
+        <img src="../img/zona_peligrosa.jpg">
 
         <div class="info-libro">
             <div>
@@ -321,7 +320,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/tres_mosqueteros.jpg">
+        <img src="../img/tres_mosqueteros.jpg">
 
         <div class="info-libro">
             <div>
@@ -349,7 +348,7 @@
             <button class="editar-libro">Editar</button>
         </div>
 
-        <img src="img/juegos_hambre.jpg">
+        <img src="../img/juegos_hambre.jpg">
 
         <div class="info-libro">
             <div>
