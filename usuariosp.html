@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Libruarys - Inicio de Sesión</title>
+    <link rel="shortcut icon" href="../logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/AnaCSS.css">
+    <script src="../js/AnaJS.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../logo.jpeg" alt="Logo de Libruarys"/>
+            <span>Libruarys</span>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li>
+                <a href="index.html">
+                    <i class="fa fa-home" style="font-size:24px;color: #7f5539;"></i> Inicio
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1 class="subtitle">Inicio para Usuario</h1>
+    
+    <div class="login-page">
+        <div class="login-container">
+            <img src="../logo1.png" class="background-logo"/>
+            <div class="login-content">
+                <form id="loginForm">
+                    
+                    <input type="email" id="correoLogin" placeholder="Correo electrónico" class="input-field" required>
+                    
+                    <input type="password" id="passLogin" placeholder="Contraseña" class="input-field" required>
+                    
+                    <div class="containerbnt">
+                        <button type="submit" class="button" style="border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 20px; width: 100%;">
+                            <span class="material-symbols-outlined">login</span>
+                            Iniciar Sesión
+                        </button>
+                    </div>
+
+                    <div class="Content" style="margin-top: 20px;">   
+                        <p style="color: #7f5539;">¿No tienes cuenta? Regístrate aquí</p>
+                    </div>
+
+                    <div class="containerbnt">
+                        <a href="RegistroUsuario.html" class="button" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <span class="material-symbols-outlined">person_add</span>
+                            Iniciar Registro
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const correo = document.getElementById('correoLogin').value;
+        const contraseña = document.getElementById('passLogin').value;
+
+        try {
+            const response = await fetch('http://localhost:8080/api/usuarios/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, contraseña })
+            });
+
+            if (response.ok) {
+                const usuarioEncontrado = await response.json();
+                alert("¡Bienvenido a Libruarys, " + usuarioEncontrado.nombre + "!");
+                
+                // ACTUALIZACIÓN DE RUTA:
+                // Salimos de /html/ y entramos a /usuario/ para cargar el catálogo principal
+                window.location.href = "../usuario/catalogo_accion.html"; 
+            } else {
+                alert("Correo o contraseña incorrectos.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al conectar con el servidor.");
+        }
+    });
+</script>
+</body>
+</html>
