@@ -1,6 +1,6 @@
 package com.libruarys.controller;
 
-import com.libruarys.model.Libreria; // Importante añadir esta
+import com.libruarys.model.Libreria;
 import com.libruarys.model.Usuario;
 import com.libruarys.repository.LibreriaRepository;
 import com.libruarys.repository.UsuarioRepository;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // Faltaba esta inyección
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private LibreriaRepository libreriaRepository; 
@@ -31,12 +31,11 @@ public class UsuarioController {
         Optional<Usuario> userOpt = usuarioRepository.findByCorreo(correo);
         
         if (userOpt.isPresent()) {
-            Usuario usuario = userOpt.get();
-            // Comparamos la contraseña (asegúrate que el método sea getContrasena o getPassword)
-            if (usuario.getContrasena().equals(contrasena)) {
+            Usuario usuario = userOpt.get(); // <-- Aquí se declara 'usuario'
+            if (usuario.getCotrasena().equals(contrasena)) {
                 return ResponseEntity.ok(Map.of(
                     "nombre", usuario.getNombre(),
-                    "redirect", "generos_usua.html", // Va a la vista de usuario
+                    "redirect", "generos_usua.html",  // Para clientes
                     "rol", "USUARIO"
                 ));
             }
@@ -46,17 +45,17 @@ public class UsuarioController {
         Optional<Libreria> libOpt = libreriaRepository.findByCorreo(correo);
         
         if (libOpt.isPresent()) {
-            Libreria libreria = libOpt.get();
-            if (libreria.getContrasena().equals(contrasena)) {
+            Libreria libreria = libOpt.get(); // <-- Aquí se declara 'libreria'
+            if (libreria.getCotrasena().equals(contrasena)) {
                 return ResponseEntity.ok(Map.of(
                     "nombre", libreria.getContacto(),
-                    "redirect", "generos_admin.html", // Va a la vista de admin/tienda
+                    "redirect", "generos_admin.html", // Para librerías
                     "rol", "ADMIN"
                 ));
             }
         }
         
-        // 3. Si no existe en ninguna tabla o la contraseña es incorrecta
+        // 3. Error si no coincide nada
         return ResponseEntity.status(401).body(Map.of("error", "Correo o contraseña incorrectos"));
     }
 
@@ -66,7 +65,7 @@ public class UsuarioController {
             Usuario guardado = usuarioRepository.save(nuevoUsuario);
             return ResponseEntity.ok(guardado);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("error", "Error al guardar en la base de datos"));
+            return ResponseEntity.status(500).body(Map.of("error", "Error al guardar"));
         }
     }
 }

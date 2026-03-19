@@ -13,24 +13,24 @@ public class Usuario {
 
     private String nombre;
 
-    @Column(name = "apellido") // En tu MySQL está en singular
+    @Column(name = "apellido") // Coincide con tu MySQL
     private String apellidos;
 
     private String correo;
     private String telefono;
 
-    @Column(name = "fecha_nac") // En tu MySQL dice 'fecha_nac'
+    @Column(name = "fecha_nac") // Coincide con tu MySQL
     private String fechaNacimiento;
 
     private String direccion;
 
-    @Column(name = "codigo_postal") // En tu MySQL dice 'codigo_postal'
+    @Column(name = "codigo_postal") // Coincide con tu MySQL
     private String codigoPostal;
 
-    @Column(name = "cotrasena") 
-    private String contrasena;
+    @Column(name = "cotrasena") // Coincide con tu MySQL
+    private String cotrasena;
 
-    // --- Getters y Setters ---
+    // --- Getters y Setters Corregidos ---
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     
@@ -55,9 +55,7 @@ public class Usuario {
     public String getCodigoPostal() { return codigoPostal; }
     public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
     
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
-
-    public String getPassword() { return contrasena; }
-    public void setPassword(String password) { this.contrasena = password; }
+    // IMPORTANTE: El nombre del método ahora coincide con lo que busca el Controller
+    public String getCotrasena() { return cotrasena; }
+    public void setCotrasena(String cotrasena) { this.cotrasena = cotrasena; }
 }
