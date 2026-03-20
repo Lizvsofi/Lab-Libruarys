@@ -64,6 +64,11 @@
             cursor: pointer;
             margin: 20px;
         }
+        /* Reducir espacios en la información del libro */
+        .info-libro p {
+            margin: 2px 0;
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body>
@@ -133,11 +138,11 @@
                 <input type="hidden" id="libroId">
                 <input type="text" id="titulo" placeholder="Título" required>
                 <input type="text" id="autor" placeholder="Autor" required>
-                <input type="text" id="editorial" placeholder="Editorial">
+                <input type="text" id="editorial" placeholder="Editorial" required>
                 <input type="number" id="precio" placeholder="Precio" step="0.01" required>
                 <input type="number" id="cantidad" placeholder="Cantidad" required>
                 <input type="text" id="imagen" placeholder="Ruta de imagen (ej. ../img/it.jpg)" required>
-                <input type="text" id="edicion" placeholder="Edición">
+                <input type="text" id="edicion" placeholder="Edición (ej. 1, 2, 3...)">
                 <input type="hidden" id="categoria" value="terror">
                 <div style="margin-top:10px;">
                     <button type="submit">Guardar</button>
@@ -148,7 +153,7 @@
     </div>
 
     <script>
-        // Función para cargar libros desde el backend
+        // --- Funciones para el catálogo ---
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/terror');
@@ -162,26 +167,28 @@
                     tarjeta.className = 'tarjeta-libro';
                     tarjeta.setAttribute('data-id', libro.id);
                     
-                    // Generar código visual (no se guarda en BD)
+                    // Generar código visual
                     const codigo = 'L-' + libro.id.toString().padStart(3, '0');
                     
-                    // Localiza esto en la función cargarLibros
-tarjeta.innerHTML = `
-    <div class="top-libro">
-        <span class="codigo-libro">LIB-${libro.id}</span>
-        <button class="editar-libro" onclick="editarLibro(${libro.id})">Editar</button>
-    </div>
-    <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
-         onerror="this.src='../img/logo_libreria.jpeg'">
-    <div class="info-libro">
-        <h3>${libro.titulo}</h3>
-        <p class="autor">${libro.autor}</p>
-        <p class="precio">$${libro.precio}</p>
-        <button class="agregar" onclick="agregarAlCarrito('${libro.titulo}', ${libro.precio})">
-            Agregar al carrito
-        </button>
-    </div>
-`;
+                    // Mostrar edición si existe
+                    const edicionTexto = libro.edicion ? `<p class="edicion"><strong>Edición:</strong> ${libro.edicion}</p>` : '';
+                    
+                    tarjeta.innerHTML = `
+                        <div class="top-libro">
+                            <span class="codigo-libro">${codigo}</span>
+                            <button class="editar-libro" onclick="editarLibro(${libro.id})">Editar</button>
+                        </div>
+                        <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
+                             onerror="this.src='../img/logo_libreria.jpeg'">
+                        <div class="info-libro">
+                            <h3 class="nombre-libro">${libro.titulo}</h3>
+                            <p class="autor"><strong>Autor:</strong> ${libro.autor}</p>
+                            <p class="editorial"><strong>Editorial:</strong> ${libro.editorial}</p>
+                            ${edicionTexto}
+                            <p class="precio"><strong>Precio:</strong> $${libro.precio} MXN</p>
+                            <button class="agregar" data-id="${libro.id}">Agregar al carrito</button>
+                        </div>
+                    `;
                     contenedor.appendChild(tarjeta);
                 });
             } catch (error) {
@@ -190,25 +197,7 @@ tarjeta.innerHTML = `
             }
         }
 
-        // Función para agregar al carrito (usando la lógica de script_admin.js)
-        function agregarAlCarrito(id) {
-            // Aquí puedes integrar la lógica de carrito existente
-            // Por ahora, usamos la función global que ya está en script_admin.js
-            // Buscamos el botón "agregar" correspondiente y simulamos un click?
-            // Mejor llamamos a la función que ya maneja el carrito en script_admin.js
-            // Pero como está en otro archivo, podemos usar el evento personalizado
-            // O simplemente replicar la lógica:
-            let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            // Necesitamos obtener los datos del libro para agregarlo
-            // Como no tenemos el libro aquí, podemos buscarlo en la lista
-            // O mejor, usamos la función existente de script_admin.js que ya está cargada
-            // Pero esa función usa el botón "agregar" de cada tarjeta.
-            // Como estamos generando dinámicamente, podemos llamar a una función que cree el objeto libro
-            // Por simplicidad, mostraremos un mensaje y luego integraremos.
-            alert('Libro agregado al carrito (pendiente de integrar con script_admin.js)');
-        }
-
-        // Abrir modal para agregar
+        // --- Funciones para el modal ---
         function abrirModalAgregar() {
             document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Libro';
             document.getElementById('formLibro').reset();
@@ -216,7 +205,6 @@ tarjeta.innerHTML = `
             document.getElementById('modalLibro').style.display = 'block';
         }
 
-        // Abrir modal para editar
         async function editarLibro(id) {
             try {
                 const response = await fetch(`http://localhost:8080/api/libros/${id}`);
@@ -245,7 +233,7 @@ tarjeta.innerHTML = `
             document.getElementById('modalLibro').style.display = 'none';
         }
 
-        // Manejar envío del formulario
+        // --- Guardar libro (crear o actualizar) ---
         document.getElementById('formLibro').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -259,8 +247,7 @@ tarjeta.innerHTML = `
                 imagen: document.getElementById('imagen').value,
                 edicion: document.getElementById('edicion').value,
                 categoria: document.getElementById('categoria').value,
-                // Asignamos nombre igual al título (opcional)
-                nombre: document.getElementById('titulo').value
+                nombre: document.getElementById('titulo').value // opcional
             };
 
             const method = libroData.id ? 'PUT' : 'POST';
@@ -288,9 +275,49 @@ tarjeta.innerHTML = `
             }
         });
 
-        // Inicializar
+        // --- Funcionalidad del carrito (event delegation) ---
+        function inicializarCarrito() {
+            const contenedor = document.getElementById('contenedor-libros');
+            const contador = document.getElementById('contador-carrito');
+            const mensaje = document.getElementById('mensaje-carrito');
+
+            // Cargar carrito desde localStorage
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            if (contador) contador.textContent = carrito.length;
+
+            // Delegación de eventos: cuando se haga clic en cualquier botón con clase 'agregar' dentro del contenedor
+            contenedor.addEventListener('click', (e) => {
+                const boton = e.target.closest('.agregar');
+                if (!boton) return;
+
+                const tarjeta = boton.closest('.tarjeta-libro');
+                if (!tarjeta) return;
+
+                const titulo = tarjeta.querySelector('.nombre-libro').textContent;
+                const precioTexto = tarjeta.querySelector('.precio').textContent;
+                // Extraer número del precio (eliminar 'Precio: $' y ' MXN')
+                const precio = parseFloat(precioTexto.replace('Precio: $', '').replace(' MXN', ''));
+                const imagen = tarjeta.querySelector('img').src;
+
+                const libro = { titulo, precio, imagen };
+                carrito.push(libro);
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                if (contador) contador.textContent = carrito.length;
+
+                // Mostrar mensaje
+                if (mensaje) {
+                    mensaje.classList.add('mostrar');
+                    setTimeout(() => {
+                        mensaje.classList.remove('mostrar');
+                    }, 2000);
+                }
+            });
+        }
+
+        // --- Inicialización ---
         document.addEventListener('DOMContentLoaded', () => {
             cargarLibros();
+            inicializarCarrito();
             document.getElementById('btnAgregarLibro').addEventListener('click', abrirModalAgregar);
         });
     </script>
