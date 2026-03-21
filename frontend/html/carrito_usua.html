@@ -162,7 +162,6 @@
     <div id="mensaje" class="mensaje">✔ Compra realizada</div>
 
     <script>
-        // Mostrar carrito
         function mostrarCarrito() {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             const contenedor = document.getElementById('lista-carrito');
@@ -219,7 +218,6 @@
             totalLibrosSpan.textContent = totalLibros;
             totalPrecioSpan.textContent = totalPrecio.toFixed(2);
 
-            // Eventos para botones "Quitar"
             document.querySelectorAll('.quitar').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
@@ -238,7 +236,6 @@
                 return;
             }
 
-            // Agrupar para obtener cantidades
             const agrupado = new Map();
             carrito.forEach(item => {
                 if (agrupado.has(item.id)) {
