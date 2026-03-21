@@ -137,7 +137,6 @@
         function toggleMenu(){
             document.getElementById("navLinks").classList.toggle("active");
         }
-        // toggleDropdown ya está definido en script_usua.js, pero lo declaramos por si acaso
         function toggleDropdown(event) {
             event.preventDefault();
             document.getElementById("submenu").classList.toggle("show");
@@ -178,7 +177,7 @@
                         <p class="precio">$${libro.precio} MXN</p>
                         <div class="botones">
                             <button class="cantidad">Cantidad ${libro.cantidad}</button>
-                            <button class="agregar">Agregar</button>
+                            <button class="agregar" data-id="${libro.id}">Agregar</button>
                         </div>
                     `;
                     contenedor.appendChild(tarjeta);
@@ -199,7 +198,7 @@
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-            // Delegación de eventos para botones "Agregar" (incluso los que se añadan después)
+            // Delegación de eventos para botones "Agregar"
             contenedor.addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
@@ -207,13 +206,15 @@
                 const tarjeta = boton.closest('.tarjeta-libro');
                 if (!tarjeta) return;
 
+                // Obtener datos del libro
+                const id = parseInt(boton.getAttribute('data-id'));
                 const titulo = tarjeta.querySelector('h3').textContent;
                 const precioTexto = tarjeta.querySelector('.precio').textContent;
-                // Extraer el número del precio (ej: "$341.05 MXN" → 341.05)
                 const precio = parseFloat(precioTexto.replace('$', '').replace(' MXN', ''));
                 const imagen = tarjeta.querySelector('img').src;
 
-                const libro = { titulo, precio, imagen };
+                // Crear objeto libro con ID
+                const libro = { id, titulo, precio, imagen };
                 carrito.push(libro);
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;

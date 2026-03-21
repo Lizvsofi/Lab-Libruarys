@@ -177,7 +177,7 @@
                         <p class="precio">$${libro.precio} MXN</p>
                         <div class="botones">
                             <button class="cantidad">Cantidad ${libro.cantidad}</button>
-                            <button class="agregar">Agregar</button>
+                            <button class="agregar" data-id="${libro.id}">Agregar</button>
                         </div>
                     `;
                     contenedor.appendChild(tarjeta);
@@ -206,13 +206,15 @@
                 const tarjeta = boton.closest('.tarjeta-libro');
                 if (!tarjeta) return;
 
+                // Obtener datos del libro
+                const id = parseInt(boton.getAttribute('data-id'));
                 const titulo = tarjeta.querySelector('h3').textContent;
                 const precioTexto = tarjeta.querySelector('.precio').textContent;
-                // Extraer número del precio (ej: "$251.30 MXN" → 251.30)
                 const precio = parseFloat(precioTexto.replace('$', '').replace(' MXN', ''));
                 const imagen = tarjeta.querySelector('img').src;
 
-                const libro = { titulo, precio, imagen };
+                // Crear objeto libro con ID
+                const libro = { id, titulo, precio, imagen };
                 carrito.push(libro);
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;
