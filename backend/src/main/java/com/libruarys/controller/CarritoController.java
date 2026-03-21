@@ -41,7 +41,6 @@ public class CarritoController {
         }
     }
 
-    // Clase interna para recibir los datos
     public static class CompraRequest {
         private List<ItemCompra> items;
 

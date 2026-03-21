@@ -32,7 +32,6 @@
             z-index: -1; 
         }
 
-        /* Estilos para las tarjetas, manteniendo la apariencia original */
         .catalogo-accion {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -95,7 +94,6 @@
     </style>
 </head>
 <body>
-    <!-- Menú responsivo -->
     <nav class="navbar">
         <div class="logo">
             <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
@@ -147,7 +145,6 @@
 
     <h1>Catálogo Acción</h1>
 
-    <!-- Contenedor para los libros (se llenará dinámicamente) -->
     <div class="catalogo-accion" id="contenedor-libros"></div>
 
     <div id="mensaje-carrito" class="mensaje-carrito">
@@ -155,7 +152,6 @@
     </div>
 
     <script>
-        // --- Cargar libros desde el backend ---
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/accion');
@@ -188,17 +184,14 @@
             }
         }
 
-        // --- Funcionalidad del carrito (event delegation) ---
         function inicializarCarrito() {
             const contenedor = document.getElementById('contenedor-libros');
             const contador = document.getElementById('contador-carrito');
             const mensaje = document.getElementById('mensaje-carrito');
 
-            // Cargar carrito desde localStorage
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-            // Delegación de eventos para botones "Agregar"
             contenedor.addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
@@ -206,20 +199,17 @@
                 const tarjeta = boton.closest('.tarjeta-libro');
                 if (!tarjeta) return;
 
-                // Obtener datos del libro
                 const id = parseInt(boton.getAttribute('data-id'));
                 const titulo = tarjeta.querySelector('h3').textContent;
                 const precioTexto = tarjeta.querySelector('.precio').textContent;
                 const precio = parseFloat(precioTexto.replace('$', '').replace(' MXN', ''));
                 const imagen = tarjeta.querySelector('img').src;
 
-                // Crear objeto libro con ID
                 const libro = { id, titulo, precio, imagen };
                 carrito.push(libro);
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;
 
-                // Mostrar mensaje
                 if (mensaje) {
                     mensaje.classList.add('mostrar');
                     setTimeout(() => {
@@ -229,7 +219,6 @@
             });
         }
 
-        // --- Inicialización ---
         document.addEventListener('DOMContentLoaded', () => {
             cargarLibros();
             inicializarCarrito();

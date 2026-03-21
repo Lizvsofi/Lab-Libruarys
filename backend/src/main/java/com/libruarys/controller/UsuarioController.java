@@ -27,35 +27,32 @@ public class UsuarioController {
         String correo = credenciales.get("correo");
         String contrasena = credenciales.get("contrasena");
 
-        // 1. Intentamos buscar primero en la tabla de CLIENTES (Usuarios)
         Optional<Usuario> userOpt = usuarioRepository.findByCorreo(correo);
         
         if (userOpt.isPresent()) {
-            Usuario usuario = userOpt.get(); // <-- Aquí se declara 'usuario'
+            Usuario usuario = userOpt.get(); 
             if (usuario.getCotrasena().equals(contrasena)) {
                 return ResponseEntity.ok(Map.of(
                     "nombre", usuario.getNombre(),
-                    "redirect", "generos_usua.html",  // Para clientes
+                    "redirect", "generos_usua.html",  
                     "rol", "USUARIO"
                 ));
             }
         }
 
-        // 2. Si no se encontró como cliente, buscamos en la tabla de LIBRERIAS
         Optional<Libreria> libOpt = libreriaRepository.findByCorreo(correo);
         
         if (libOpt.isPresent()) {
-            Libreria libreria = libOpt.get(); // <-- Aquí se declara 'libreria'
+            Libreria libreria = libOpt.get(); 
             if (libreria.getCotrasena().equals(contrasena)) {
                 return ResponseEntity.ok(Map.of(
                     "nombre", libreria.getContacto(),
-                    "redirect", "generos_admin.html", // Para librerías
+                    "redirect", "generos_admin.html", 
                     "rol", "ADMIN"
                 ));
             }
         }
         
-        // 3. Error si no coincide nada
         return ResponseEntity.status(401).body(Map.of("error", "Correo o contraseña incorrectos"));
     }
 

@@ -29,7 +29,6 @@
             height: 100%;
             z-index: -1; 
         }
-        /* Estilos para el modal */
         .modal {
             display: none;
             position: fixed;
@@ -64,7 +63,6 @@
             cursor: pointer;
             margin: 20px;
         }
-        /* Reducir espacios en la información del libro */
         .info-libro p {
             margin: 2px 0;
             line-height: 1.2;
@@ -72,7 +70,6 @@
     </style>
 </head>
 <body>
-    <!-- Responsive Menu -->
     <nav class="navbar">
         <div class="logo">
             <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
@@ -120,17 +117,14 @@
 
     <h1>Catálogo Terror</h1>
 
-    <!-- Botón para agregar nuevo libro -->
     <div style="text-align: right;">
         <button class="btn-agregar-libro" id="btnAgregarLibro">+ Agregar Libro</button>
     </div>
 
-    <!-- Contenedor de libros (se llenará dinámicamente) -->
     <div class="catalogo-accion" id="contenedor-libros"></div>
 
     <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
-    <!-- Modal para agregar/editar libro -->
     <div id="modalLibro" class="modal">
         <div class="modal-content">
             <h3 id="modalTitulo">Agregar Nuevo Libro</h3>
@@ -153,7 +147,6 @@
     </div>
 
     <script>
-        // --- Funciones para el catálogo ---
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/terror');
@@ -167,10 +160,8 @@
                     tarjeta.className = 'tarjeta-libro';
                     tarjeta.setAttribute('data-id', libro.id);
                     
-                    // Generar código visual
                     const codigo = 'L-' + libro.id.toString().padStart(3, '0');
                     
-                    // Mostrar edición si existe
                     const edicionTexto = libro.edicion ? `<p class="edicion"><strong>Edición:</strong> ${libro.edicion}</p>` : '';
                     
                     tarjeta.innerHTML = `
@@ -197,7 +188,6 @@
             }
         }
 
-        // --- Funciones para el modal ---
         function abrirModalAgregar() {
             document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Libro';
             document.getElementById('formLibro').reset();
@@ -233,7 +223,6 @@
             document.getElementById('modalLibro').style.display = 'none';
         }
 
-        // --- Guardar libro (crear o actualizar) ---
         document.getElementById('formLibro').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -275,17 +264,14 @@
             }
         });
 
-        // --- Funcionalidad del carrito (event delegation) ---
         function inicializarCarrito() {
             const contenedor = document.getElementById('contenedor-libros');
             const contador = document.getElementById('contador-carrito');
             const mensaje = document.getElementById('mensaje-carrito');
 
-            // Cargar carrito desde localStorage
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-            // Delegación de eventos: cuando se haga clic en cualquier botón con clase 'agregar' dentro del contenedor
             contenedor.addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
@@ -295,7 +281,7 @@
 
                 const titulo = tarjeta.querySelector('.nombre-libro').textContent;
                 const precioTexto = tarjeta.querySelector('.precio').textContent;
-                // Extraer número del precio (eliminar 'Precio: $' y ' MXN')
+                
                 const precio = parseFloat(precioTexto.replace('Precio: $', '').replace(' MXN', ''));
                 const imagen = tarjeta.querySelector('img').src;
 
@@ -314,7 +300,7 @@
             });
         }
 
-        // --- Inicialización ---
+    
         document.addEventListener('DOMContentLoaded', () => {
             cargarLibros();
             inicializarCarrito();

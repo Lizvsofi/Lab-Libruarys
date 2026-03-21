@@ -64,7 +64,6 @@
             cursor: pointer;
             margin: 20px;
         }
-        /* Reducir espacios en la información del libro */
         .info-libro p {
             margin: 2px 0;
             line-height: 1.2;
@@ -72,7 +71,6 @@
     </style>
 </head>
 <body>
-    <!-- Responsive Menu -->
     <nav class="navbar">
         <div class="logo">
             <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
@@ -120,17 +118,14 @@
 
     <h1>Catálogo Romance</h1>
 
-    <!-- Botón para agregar nuevo libro -->
     <div style="text-align: right;">
         <button class="btn-agregar-libro" id="btnAgregarLibro">+ Agregar Libro</button>
     </div>
 
-    <!-- Contenedor de libros (se llenará dinámicamente) -->
     <div class="catalogo-accion" id="contenedor-libros"></div>
 
     <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
-    <!-- Modal para agregar/editar libro -->
     <div id="modalLibro" class="modal">
         <div class="modal-content">
             <h3 id="modalTitulo">Agregar Nuevo Libro</h3>
@@ -153,7 +148,6 @@
     </div>
 
     <script>
-        // --- Funciones para el catálogo ---
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/romance');
@@ -197,7 +191,6 @@
             }
         }
 
-        // --- Funciones para el modal ---
         function abrirModalAgregar() {
             document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Libro';
             document.getElementById('formLibro').reset();
@@ -233,7 +226,6 @@
             document.getElementById('modalLibro').style.display = 'none';
         }
 
-        // --- Guardar libro (crear o actualizar) ---
         document.getElementById('formLibro').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -275,17 +267,14 @@
             }
         });
 
-        // --- Funcionalidad del carrito (event delegation) ---
         function inicializarCarrito() {
             const contenedor = document.getElementById('contenedor-libros');
             const contador = document.getElementById('contador-carrito');
             const mensaje = document.getElementById('mensaje-carrito');
 
-            // Cargar carrito desde localStorage
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-            // Delegación de eventos: cuando se haga clic en cualquier botón con clase 'agregar' dentro del contenedor
             contenedor.addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
@@ -295,7 +284,6 @@
 
                 const titulo = tarjeta.querySelector('h3').textContent;
                 const precioTexto = tarjeta.querySelector('p:has(strong)')?.textContent; // Mejor obtener de la línea específica
-                // Vamos a buscar el párrafo que contiene "Precio:" y extraer el número
                 let precio = 0;
                 const parrafos = tarjeta.querySelectorAll('p');
                 parrafos.forEach(p => {
@@ -311,7 +299,6 @@
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;
 
-                // Mostrar mensaje
                 if (mensaje) {
                     mensaje.classList.add('mostrar');
                     setTimeout(() => {
@@ -321,7 +308,6 @@
             });
         }
 
-        // --- Inicialización ---
         document.addEventListener('DOMContentLoaded', () => {
             cargarLibros();
             inicializarCarrito();

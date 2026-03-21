@@ -21,11 +21,9 @@ public class Libreria {
 
     private String correo;
 
-    // Cambiado de 'contrasena' a 'cotrasena' para coincidir con la base de datos
     @Column(name = "cotrasena")
     private String cotrasena;
 
-    // Getters y Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -44,7 +42,6 @@ public class Libreria {
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }
 
-    // Métodos actualizados para usar 'cotrasena'
     public String getCotrasena() { return cotrasena; }
     public void setCotrasena(String cotrasena) { this.cotrasena = cotrasena; }
 }
