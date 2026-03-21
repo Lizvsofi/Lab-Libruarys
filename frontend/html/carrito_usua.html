@@ -172,26 +172,25 @@
             let totalLibros = 0;
             let totalPrecio = 0;
 
-            
             const agrupado = new Map();
             carrito.forEach(item => {
-    const precio = Number(item.precio);          
-    const id = Number(item.id);                  
-    if (agrupado.has(id)) {
-        const existente = agrupado.get(id);
-        existente.cantidad += 1;
-        existente.precioTotal += precio;
-    } else {
-        agrupado.set(id, {
-            id: id,
-            titulo: item.titulo,
-            precio: precio,
-            imagen: item.imagen,
-            cantidad: 1,
-            precioTotal: precio
-        });
-    }
-});
+                const precio = Number(item.precio);
+                const id = Number(item.id);
+                if (agrupado.has(id)) {
+                    const existente = agrupado.get(id);
+                    existente.cantidad += 1;
+                    existente.precioTotal += precio;
+                } else {
+                    agrupado.set(id, {
+                        id: id,
+                        titulo: item.titulo,
+                        precio: precio,
+                        imagen: item.imagen,
+                        cantidad: 1,
+                        precioTotal: precio
+                    });
+                }
+            });
 
             agrupado.forEach(item => {
                 const itemDiv = document.createElement('div');
@@ -201,12 +200,12 @@
                         <img src="${item.imagen}" alt="${item.titulo}">
                         <div>
                             <b>${item.titulo}</b><br>
-                            <span>$${item.precio} MXN</span>
+                            <span>$${item.precio.toFixed(2)} MXN</span>
                         </div>
                     </div>
                     <div>
                         Cantidad: ${item.cantidad}<br>
-                        Subtotal: $${item.precioTotal}
+                        Subtotal: $${item.precioTotal.toFixed(2)}
                         <button class="quitar" data-id="${item.id}">Quitar todos</button>
                     </div>
                 `;
@@ -221,14 +220,13 @@
             document.querySelectorAll('.quitar').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
-                    const nuevoCarrito = carrito.filter(item => item.id != id);
+                    const nuevoCarrito = carrito.filter(item => Number(item.id) !== id);
                     localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
-                    mostrarCarrito(); // refrescar
+                    mostrarCarrito();
                 });
             });
         }
 
-        // Pagar
         async function pagar() {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (carrito.length === 0) {
@@ -238,15 +236,24 @@
 
             const agrupado = new Map();
             carrito.forEach(item => {
-                if (agrupado.has(item.id)) {
-                    agrupado.get(item.id).cantidad++;
+                const id = Number(item.id);
+                const precio = Number(item.precio);
+                if (isNaN(id) || isNaN(precio)) return;
+                if (agrupado.has(id)) {
+                    const existente = agrupado.get(id);
+                    existente.cantidad++;
                 } else {
-                    agrupado.set(item.id, { id: item.id, cantidad: 1 });
+                    agrupado.set(id, {
+                        id: id,
+                        titulo: item.titulo,
+                        precio: precio,
+                        cantidad: 1
+                    });
                 }
             });
             const items = Array.from(agrupado.values());
 
-            const body = { items };
+            const body = { items: items.map(i => ({ id: i.id, cantidad: i.cantidad })) };
 
             try {
                 const response = await fetch('http://localhost:8080/api/carrito/comprar', {
@@ -256,9 +263,16 @@
                 });
                 const data = await response.json();
                 if (response.ok) {
+                    const totalCompra = items.reduce((acc, i) => acc + (i.precio * i.cantidad), 0);
+                    sessionStorage.setItem('ultimaCompra', JSON.stringify({
+                        items: items,
+                        total: totalCompra,
+                        fecha: new Date().toLocaleString()
+                    }));
                     localStorage.removeItem('carrito');
-                    mostrarCarrito();
+                    mostrarCarrito(); // actualizar vista (aunque luego redirigimos)
                     mostrarMensaje('Compra realizada con éxito');
+                    window.location.href = 'ticket.html';
                 } else {
                     mostrarMensaje(data.error || 'Error al procesar la compra', true);
                 }

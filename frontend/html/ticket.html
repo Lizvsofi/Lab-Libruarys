@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Libruarys - Ticket de compra</title>
+    <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styless_usua.css">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .ticket {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        .ticket h1 {
+            text-align: center;
+            color: #7f5539;
+            margin-top: 0;
+        }
+        .ticket .fecha {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .ticket-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #ccc;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        .ticket-item span:first-child {
+            font-weight: bold;
+        }
+        .ticket-total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            margin-top: 15px;
+            border-top: 2px solid #7f5539;
+            padding-top: 10px;
+        }
+        .acciones {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #7f5539;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #5e3f2a;
+        }
+        .mensaje {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <h1>🧾 Libruarys</h1>
+        <div class="fecha" id="fecha"></div>
+        <div id="ticketBody"></div>
+        <div class="acciones">
+            <button onclick="window.print()">🖨️ Imprimir ticket</button>
+            <button onclick="volverAlInicio()">🏠 Volver al inicio</button>
+        </div>
+        <div class="mensaje">¡Gracias por tu compra!</div>
+    </div>
+
+    <script>
+        function volverAlInicio() {
+            window.location.href = 'generos_usua.html';
+        }
+
+        function cargarTicket() {
+            const compra = JSON.parse(sessionStorage.getItem('ultimaCompra'));
+            if (!compra) {
+                window.location.href = 'generos_usua.html';
+                return;
+            }
+
+            document.getElementById('fecha').textContent = compra.fecha;
+
+            const ticketBody = document.getElementById('ticketBody');
+            ticketBody.innerHTML = '';
+
+            compra.items.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'ticket-item';
+                itemDiv.innerHTML = `
+                    <span>📖 ${item.titulo} x ${item.cantidad}</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                `;
+                ticketBody.appendChild(itemDiv);
+            });
+
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'ticket-total';
+            totalDiv.innerHTML = `TOTAL: $${compra.total.toFixed(2)}`;
+            ticketBody.appendChild(totalDiv);
+
+            sessionStorage.removeItem('ultimaCompra');
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarTicket);
+    </script>
+</body>
+</html>
