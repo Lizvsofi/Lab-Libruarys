@@ -105,14 +105,25 @@
         .mensaje.mostrar {
             opacity: 1;
         }
+        .logo-link {
+    text-decoration: none; 
+    color: inherit;        
+    display: flex;         
+    align-items: center;
+}
+.logo-link:hover {
+    opacity: 0.8;          
+}
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">
-            <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
-            <span>Libruarys</span>
-        </div>
+        <a href="generos_usua.html" class="logo-link">
+    <div class="logo">
+        <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
+        <span>Libruarys</span>
+    </div>
+</a>
         <div class="hamburger" onclick="toggleMenu()">☰</div>
         <ul class="nav-links" id="navLinks">
             <li class="dropdown">

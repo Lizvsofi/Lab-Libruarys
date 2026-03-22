@@ -55,7 +55,6 @@ public class UsuarioController {
         
         return ResponseEntity.status(401).body(Map.of("error", "Correo o contraseña incorrectos"));
     }
-
     @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody Usuario nuevoUsuario) {
         try {
