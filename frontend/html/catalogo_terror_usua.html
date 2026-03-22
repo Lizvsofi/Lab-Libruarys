@@ -7,21 +7,66 @@
     <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="../css/styless_usua.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
-        
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
-        .logo-link {
-    text-decoration: none; 
-    color: inherit;        
-    display: flex;         
-    align-items: center;
-}
-.logo-link:hover {
-    opacity: 0.8;          
-}
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%; 
+            left: 0;
+            background-color: #ffffff;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            border-radius: 4px;
+            z-index: 3000;
+        }
+
+        .dropdown::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 15px; 
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            display: block;
+            width: 100%;
+            padding: 0; 
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            color: #7f5539 !important;
+            text-decoration: none;
+            font-weight: normal !important;
+            transition: background 0.2s;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* --- ESTILOS DEL CATÁLOGO --- */
         .catalogo-accion {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -53,9 +98,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .agregar {
-            background-color: #b8860b;
-        }
+        .agregar { background-color: #b8860b; }
         .mensaje-carrito {
             position: fixed;
             bottom: 20px;
@@ -67,28 +110,29 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            z-index: 4000;
         }
-        .mensaje-carrito.mostrar {
-            opacity: 1;
-        }
+        .mensaje-carrito.mostrar { opacity: 1; }
     </style>
 </head>
 <body>
+    <div class="fondo"></div>
+
     <nav class="navbar">
-        <a href="generos_usua.html" class="logo-link">
-    <div class="logo">
-        <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
-        <span>Libruarys</span>
-    </div>
-</a>
-</a>
-</a>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <a href="generos_usua.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+                <span style="font-weight: bold; font-size: 1.2rem; color: #7f5539;">Libruarys</span>
+            </div>
+        </a>
+
+        <div class="hamburger" onclick="toggleMenu()" style="cursor: pointer; font-size: 24px;">☰</div>
+
         <ul class="nav-links" id="navLinks">
-            <li class="dropdown">
-                <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-                <a href="generos_usua.html" class="active">Géneros</a>
-                <ul class="dropdown-menu" id="submenu">
+            <li class="dropdown" id="generosDropdown">
+                <span class="material-symbols-outlined" style="color:#7f5539;">library_books</span>
+                <a href="#" onclick="toggleDropdown(event)">Géneros ▾</a>
+                <ul class="dropdown-menu">
                     <li><a href="catalogo_accion_usua.html">Acción</a></li>
                     <li><a href="catalogo_terror_usua.html">Terror</a></li>
                     <li><a href="catalogo_aventura_usua.html">Aventura</a></li>
@@ -100,29 +144,44 @@
                     <li><a href="catalogo_romance_usua.html">Romance</a></li>
                 </ul>
             </li>
-            <li>
-                <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
+
+            <li style="display: flex; align-items: center; gap: 5px;">
+                <span class="material-icons" style="color: #7f5539;">shopping_cart</span>
                 <a href="carrito_usua.html">Carrito <span id="contador-carrito">0</span></a>
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 5px;">
+                <span class="material-symbols-outlined" style="color: #ff4d4d;">logout</span>
+                <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" style="color: #ff4d4d; font-weight: bold;">Cerrar Sesión</a>
             </li>
         </ul>
     </nav>
+
+    <h1 style="text-align: center; color: #7f5539; margin-top: 20px;">Catálogo Terror</h1>
+    <div class="catalogo-accion" id="contenedor-libros"></div>
+    <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
     <script>
         function toggleMenu(){
             document.getElementById("navLinks").classList.toggle("active");
         }
-    </script>
 
-    <div class="fondo"></div>
+        function toggleDropdown(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById("generosDropdown");
+            dropdown.classList.toggle("show");
+        }
 
-    <h1>Catálogo Terror</h1>
+        // Cierra el menú si haces clic fuera
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown a')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
 
-    <div class="catalogo-accion" id="contenedor-libros"></div>
-
-    <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
-
-    <script>
-    
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/terror');
@@ -134,8 +193,6 @@
                 libros.forEach(libro => {
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'tarjeta-libro';
-                    tarjeta.setAttribute('data-id', libro.id);
-                    
                     const imagenSrc = libro.imagen ? `../img/${libro.imagen}` : '../img/logo_libreria.jpeg';
                     
                     tarjeta.innerHTML = `
@@ -150,47 +207,33 @@
                     `;
                     contenedor.appendChild(tarjeta);
                 });
-            } catch (error) {
-                console.error('Error:', error);
-                alert('No se pudieron cargar los libros');
-            }
+            } catch (error) { console.error('Error:', error); }
         }
 
         function inicializarCarrito() {
-            const contenedor = document.getElementById('contenedor-libros');
             const contador = document.getElementById('contador-carrito');
-            const mensaje = document.getElementById('mensaje-carrito');
-
-            
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-    
-            contenedor.addEventListener('click', (e) => {
+            document.getElementById('contenedor-libros').addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
 
                 const tarjeta = boton.closest('.tarjeta-libro');
-                if (!tarjeta) return;
+                const libro = {
+                    id: parseInt(boton.getAttribute('data-id')),
+                    titulo: tarjeta.querySelector('h3').textContent,
+                    precio: parseFloat(tarjeta.querySelector('.precio').textContent.replace('$', '').replace(' MXN', '')),
+                    imagen: tarjeta.querySelector('img').src
+                };
 
-                // Obtener datos del libro
-                const id = parseInt(boton.getAttribute('data-id')); 
-                const titulo = tarjeta.querySelector('h3').textContent;
-                const precioTexto = tarjeta.querySelector('.precio').textContent;
-                const precio = parseFloat(precioTexto.replace('$', '').replace(' MXN', ''));
-                const imagen = tarjeta.querySelector('img').src;
-
-                const libro = { id, titulo, precio, imagen };
                 carrito.push(libro);
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;
 
-                if (mensaje) {
-                    mensaje.classList.add('mostrar');
-                    setTimeout(() => {
-                        mensaje.classList.remove('mostrar');
-                    }, 2000);
-                }
+                const mensaje = document.getElementById('mensaje-carrito');
+                mensaje.classList.add('mostrar');
+                setTimeout(() => mensaje.classList.remove('mostrar'), 2000);
             });
         }
 

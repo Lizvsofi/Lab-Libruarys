@@ -6,76 +6,108 @@
     <title>Libruarys - Suspenso</title>
     <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="../css/styless_usua.css">
-    <script src="../js/script_usua.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
-        
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
-        body{
-            margin:0;
-            font-family: Arial, Helvetica, sans-serif;
+        /* --- CORRECCIÓN DEL MENÚ DESPLEGABLE (IGUAL A TERROR) --- */
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .fondo{
-            background-image: url("../img/logo.jpeg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            opacity: 0.30; 
-            position: fixed;
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            border-radius: 4px;
+            z-index: 3000;
+        }
+
+        /* Puente invisible para evitar que se cierre el menú */
+        .dropdown::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1; 
+            height: 15px;
         }
 
+        /* Mostrar el menú al pasar el mouse */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            display: block;
+            width: 100%;
+            padding: 0;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            color: #7f5539 !important;
+            text-decoration: none;
+            font-weight: normal !important;
+            transition: background 0.2s;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* --- ESTILOS DEL CATÁLOGO --- */
         .catalogo-accion {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             padding: 20px;
         }
+
         .tarjeta-libro {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid #7f5539;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
         }
+
         .tarjeta-libro img {
             max-width: 150px;
             height: 200px;
             object-fit: cover;
-            border-radius: 4px;
         }
-        .tarjeta-libro h3 {
-            margin: 10px 0 5px;
-            color: #7f5539;
-        }
-        .tarjeta-libro .autor, .tarjeta-libro .precio {
-            margin: 5px 0;
-        }
+
         .botones {
+            display: flex;
+            justify-content: space-around;
             margin-top: 10px;
         }
-        .botones button {
-            margin: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .agregar {
+
+        .cantidad, .agregar {
             background-color: #7f5539;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 5px;
+            cursor: pointer;
         }
-        .agregar:hover {
-            background-color: #5e3f2a;
-        }
+
+        .agregar { background-color: #b8860b; }
+
         .mensaje-carrito {
             position: fixed;
             bottom: 20px;
@@ -87,84 +119,81 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            z-index: 4000;
         }
-        .mensaje-carrito.mostrar {
-            opacity: 1;
-        }
-        .logo-link {
-    text-decoration: none; 
-    color: inherit;        
-    display: flex;         
-    align-items: center;
-}
-.logo-link:hover {
-    opacity: 0.8;          
-}
+
+        .mensaje-carrito.mostrar { opacity: 1; }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="generos_usua.html" class="logo-link">
-    <div class="logo">
-        <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
-        <span>Libruarys</span>
-    </div>
-</a>
+    <div class="fondo"></div>
 
-        <div class="hamburger" onclick="toggleMenu()">
-            ☰
-        </div>
+    <nav class="navbar">
+        <a href="generos_usua.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+                <span style="font-weight: bold; font-size: 1.2rem; color: #7f5539;">Libruarys</span>
+            </div>
+        </a>
+
+        <div class="hamburger" onclick="toggleMenu()" style="cursor: pointer; font-size: 24px;">☰</div>
 
         <ul class="nav-links" id="navLinks">
-            <li class="dropdown"></li>
-            <li class="dropdown">
-                <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-                <a href="../html/generos_usua.html" onclick="toggleDropdown(event)" class="active">Géneros</a>
-
-                <ul class="dropdown-menu" id="submenu">
-                    <li><a href="../html/catalogo_accion_usua.html">Acción</a></li>
-                    <li><a href="../html/catalogo_terror_usua.html">Terror</a></li>
-                    <li><a href="../html/catalogo_aventura_usua.html">Aventura</a></li>
-                    <li><a href="../html/catalogo_ciencia_ficcion_usua.html">Ciencia Ficción</a></li>
-                    <li><a href="../html/catalogo_suspenso_usua.html">Suspenso</a></li>
-                    <li><a href="../html/catalogo_drama_usua.html">Drama</a></li>
-                    <li><a href="../html/catalogo_infantil_usua.html">Infantil</a></li>
-                    <li><a href="../html/catalogo_misterio_usua.html">Misterio</a></li>
-                    <li><a href="../html/catalogo_romance_usua.html">Romance</a></li>
+            <li class="dropdown" id="generosDropdown">
+                <span class="material-symbols-outlined" style="color:#7f5539;">library_books</span>
+                <a href="#" onclick="toggleDropdown(event)">Géneros ▾</a>
+                <ul class="dropdown-menu">
+                    <li><a href="catalogo_accion_usua.html">Acción</a></li>
+                    <li><a href="catalogo_terror_usua.html">Terror</a></li>
+                    <li><a href="catalogo_aventura_usua.html">Aventura</a></li>
+                    <li><a href="catalogo_ciencia_ficcion_usua.html">Ciencia Ficción</a></li>
+                    <li><a href="catalogo_suspenso_usua.html">Suspenso</a></li>
+                    <li><a href="catalogo_drama_usua.html">Drama</a></li>
+                    <li><a href="catalogo_infantil_usua.html">Infantil</a></li>
+                    <li><a href="catalogo_misterio_usua.html">Misterio</a></li>
+                    <li><a href="catalogo_romance_usua.html">Romance</a></li>
                 </ul>
             </li>
-            <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
-            <li>
-                <a href="../html/carrito_usua.html">
-                    Carrito <span id="contador-carrito">0</span>
-                </a>
+
+            <li style="display: flex; align-items: center; gap: 5px;">
+                <span class="material-icons" style="color: #7f5539;">shopping_cart</span>
+                <a href="carrito_usua.html">Carrito <span id="contador-carrito">0</span></a>
+            </li>
+
+            <li style="display: flex; align-items: center; gap: 5px;">
+                <span class="material-symbols-outlined" style="color: #ff4d4d;">logout</span>
+                <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" style="color: #ff4d4d; font-weight: bold;">Cerrar Sesión</a>
             </li>
         </ul>
     </nav>
+
+    <h1 style="text-align: center; color: #7f5539; margin-top: 20px;">Catálogo Suspenso</h1>
+    <div class="catalogo-accion" id="contenedor-libros"></div>
+    <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
     <script>
         function toggleMenu(){
             document.getElementById("navLinks").classList.toggle("active");
         }
+
         function toggleDropdown(event) {
             event.preventDefault();
-            document.getElementById("submenu").classList.toggle("show");
+            const dropdown = document.getElementById("generosDropdown");
+            dropdown.classList.toggle("show");
         }
-    </script>
 
-    <div class="fondo"></div>
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown a')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
 
-    <h1>Catálogo Suspenso</h1>
-
-    <div class="catalogo-accion" id="contenedor-libros"></div>
-
-    <div id="mensaje-carrito" class="mensaje-carrito">
-        ✔ Libro agregado al carrito
-    </div>
-
-    <script>
         async function cargarLibros() {
             try {
+                // Cambiado a la categoría 'suspenso'
                 const response = await fetch('http://localhost:8080/api/libros/categoria/suspenso');
                 if (!response.ok) throw new Error('Error al cargar libros');
                 const libros = await response.json();
@@ -174,11 +203,10 @@
                 libros.forEach(libro => {
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'tarjeta-libro';
-                    tarjeta.setAttribute('data-id', libro.id);
+                    const imagenSrc = libro.imagen ? `../img/${libro.imagen}` : '../img/logo_libreria.jpeg';
                     
                     tarjeta.innerHTML = `
-                        <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
-                             onerror="this.src='../img/logo_libreria.jpeg'">
+                        <img src="${imagenSrc}" alt="${libro.titulo}" onerror="this.src='../img/logo_libreria.jpeg'">
                         <h3>${libro.titulo}</h3>
                         <p class="autor">${libro.autor}</p>
                         <p class="precio">$${libro.precio} MXN</p>
@@ -189,44 +217,33 @@
                     `;
                     contenedor.appendChild(tarjeta);
                 });
-            } catch (error) {
-                console.error('Error:', error);
-                alert('No se pudieron cargar los libros');
-            }
+            } catch (error) { console.error('Error:', error); }
         }
 
         function inicializarCarrito() {
-            const contenedor = document.getElementById('contenedor-libros');
             const contador = document.getElementById('contador-carrito');
-            const mensaje = document.getElementById('mensaje-carrito');
-
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (contador) contador.textContent = carrito.length;
 
-            contenedor.addEventListener('click', (e) => {
+            document.getElementById('contenedor-libros').addEventListener('click', (e) => {
                 const boton = e.target.closest('.agregar');
                 if (!boton) return;
 
                 const tarjeta = boton.closest('.tarjeta-libro');
-                if (!tarjeta) return;
+                const libro = {
+                    id: parseInt(boton.getAttribute('data-id')),
+                    titulo: tarjeta.querySelector('h3').textContent,
+                    precio: parseFloat(tarjeta.querySelector('.precio').textContent.replace('$', '').replace(' MXN', '')),
+                    imagen: tarjeta.querySelector('img').src
+                };
 
-                const id = parseInt(boton.getAttribute('data-id'));
-                const titulo = tarjeta.querySelector('h3').textContent;
-                const precioTexto = tarjeta.querySelector('.precio').textContent;
-                const precio = parseFloat(precioTexto.replace('$', '').replace(' MXN', ''));
-                const imagen = tarjeta.querySelector('img').src;
-
-                const libro = { id, titulo, precio, imagen };
                 carrito.push(libro);
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 if (contador) contador.textContent = carrito.length;
 
-                if (mensaje) {
-                    mensaje.classList.add('mostrar');
-                    setTimeout(() => {
-                        mensaje.classList.remove('mostrar');
-                    }, 2000);
-                }
+                const mensaje = document.getElementById('mensaje-carrito');
+                mensaje.classList.add('mostrar');
+                setTimeout(() => mensaje.classList.remove('mostrar'), 2000);
             });
         }
 
