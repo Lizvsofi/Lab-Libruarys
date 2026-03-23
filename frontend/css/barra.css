@@ -102,7 +102,7 @@
     display: none;
     cursor: pointer;
     font-size: 24px;
-    color: white;
+    color: #7f5539;
 }
 
 @media (max-width: 768px) {
@@ -112,7 +112,7 @@
         flex-direction: column; 
         position: absolute; 
         top: 70px; right: 0; 
-        background: #e9bc60; 
+        background: #b08968; 
         width: 100%; padding: 20px; 
     }
     .nav-admin-links.active { display: flex; }
