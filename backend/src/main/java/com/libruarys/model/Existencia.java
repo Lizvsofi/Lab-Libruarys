@@ -1,7 +1,7 @@
 package com.libruarys.model;
 
 import jakarta.persistence.*;
-
+//liz
 @Entity
 @Table(name = "existencia")
 public class Existencia {
