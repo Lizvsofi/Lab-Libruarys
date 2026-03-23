@@ -95,7 +95,7 @@
         <ul class="nav-admin-links" id="navLinks">
             <li class="nav-admin-item dropdown-admin" id="generosDropdown">
                 <span class="material-symbols-outlined" style="color: #7f5539;">library_books</span>
-                <a href="#" style="color: #7f5539;"toggleDropdown(event)">Géneros ▾</a>
+                <a href="#" style="color: #7f5539;" onclick="toggleDropdown(event)">Géneros ▾</a>
                 <ul class="dropdown-admin-menu">
                     <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
                     <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
@@ -134,19 +134,20 @@
                 <input type="text" id="editorial" placeholder="Editorial" required>
                 <input type="number" id="precio" placeholder="Precio" step="0.01" required>
                 <input type="number" id="cantidad" placeholder="Cantidad" required>
-                <input type="text" id="imagen" placeholder="Nombre de imagen (ej. isla_tesoro.jpg)" required>
+                <input type="text" id="imagen" placeholder="Ruta de imagen (ej. isla_tesoro.jpg)" required>
                 <input type="text" id="edicion" placeholder="Edición (ej. 1, 2, 3...)">
                 <input type="hidden" id="categoria" value="aventura">
                 <div style="margin-top:10px;">
-                    <button type="submit">Guardar</button>
-                    <button type="button" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" style="background:#7f5539; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Guardar</button>
+                    <button type="button" onclick="cerrarModal()" style="padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        /* Funciones de Navegación */
+        const ID_LIBRERIA = 133;
+
         function toggleMenu(){
             document.getElementById("navLinks").classList.toggle("active");
         }
@@ -161,7 +162,6 @@
             }
         }
 
-        /* Lógica del Catálogo de Aventura */
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/aventura');
@@ -170,18 +170,26 @@
                 const contenedor = document.getElementById('contenedor-libros');
                 contenedor.innerHTML = '';
                 
-                libros.forEach(libro => {
+                for (const libro of libros) {
+                    let stockActual = 0;
+                    try {
+                        const resStock = await fetch(`http://localhost:8080/api/existencias/${ID_LIBRERIA}/${libro.id}`);
+                        if(resStock.ok) {
+                            const dataStock = await resStock.json();
+                            stockActual = dataStock.cantidad;
+                        }
+                    } catch(e) { console.error("No se pudo obtener stock para libro " + libro.id); }
+
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'tarjeta-libro';
                     tarjeta.setAttribute('data-id', libro.id);
-                    
                     const codigo = 'L-' + libro.id.toString().padStart(3, '0');
                     const edicionTexto = libro.edicion ? `<p class="edicion"><strong>Edición:</strong> ${libro.edicion}</p>` : '';
                     
                     tarjeta.innerHTML = `
                         <div class="top-libro">
                             <span class="codigo-libro">${codigo}</span>
-                            <button class="editar-libro" onclick="editarLibro(${libro.id})">Editar</button>
+                            <button class="editar-libro" onclick="editarLibro(${libro.id}, ${stockActual})">Editar</button>
                         </div>
                         <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
                              onerror="this.src='../img/logo_libreria.jpeg'">
@@ -191,10 +199,11 @@
                             <p class="editorial"><strong>Editorial:</strong> ${libro.editorial}</p>
                             ${edicionTexto}
                             <p class="precio"><strong>Precio:</strong> $${libro.precio} MXN</p>
+                            <p class="stock"><strong>Disponible:</strong> ${stockActual}</p>
                         </div>
                     `;
                     contenedor.appendChild(tarjeta);
-                });
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -204,28 +213,25 @@
             document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Libro';
             document.getElementById('formLibro').reset();
             document.getElementById('libroId').value = '';
-            document.getElementById('categoria').value = 'aventura';
             document.getElementById('modalLibro').style.display = 'block';
         }
 
-        async function editarLibro(id) {
+        async function editarLibro(id, stockActual) {
             try {
                 const response = await fetch(`http://localhost:8080/api/libros/${id}`);
                 const libro = await response.json();
-                
                 document.getElementById('modalTitulo').innerText = 'Editar Libro';
                 document.getElementById('libroId').value = libro.id;
                 document.getElementById('titulo').value = libro.titulo;
                 document.getElementById('autor').value = libro.autor;
                 document.getElementById('editorial').value = libro.editorial;
                 document.getElementById('precio').value = libro.precio;
-                document.getElementById('cantidad').value = libro.cantidad;
+                document.getElementById('cantidad').value = stockActual;
                 document.getElementById('imagen').value = libro.imagen;
-                document.getElementById('edicion').value = libro.edicion;
+                document.getElementById('edicion').value = libro.edicion || '';
                 document.getElementById('categoria').value = libro.categoria;
-                
                 document.getElementById('modalLibro').style.display = 'block';
-            } catch (error) { alert('Error al cargar el libro'); }
+            } catch (error) { alert('Error al cargar libro'); }
         }
 
         function cerrarModal() {
@@ -235,16 +241,17 @@
         document.getElementById('formLibro').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('libroId').value;
+            const cantidadForm = parseInt(document.getElementById('cantidad').value);
+
             const libroData = {
                 id: id || null,
                 titulo: document.getElementById('titulo').value,
                 autor: document.getElementById('autor').value,
                 editorial: document.getElementById('editorial').value,
                 precio: parseFloat(document.getElementById('precio').value),
-                cantidad: parseInt(document.getElementById('cantidad').value),
                 imagen: document.getElementById('imagen').value,
                 edicion: document.getElementById('edicion').value,
-                categoria: "aventura"
+                categoria: document.getElementById('categoria').value
             };
 
             const method = id ? 'PUT' : 'POST';
@@ -256,13 +263,29 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(libroData)
                 });
+
                 if (response.ok) {
-                    cerrarModal();
-                    cargarLibros();
-                } else {
-                    alert('Error al procesar la solicitud');
+                    const libroConfirmado = await response.json();
+                    
+                    const existenciaData = {
+                        id_libreria: ID_LIBRERIA,
+                        id_libro: libroConfirmado.id,
+                        cantidad: cantidadForm
+                    };
+
+                    await fetch(`http://localhost:8080/api/existencias`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(existenciaData)
+                    });
+
+                    cerrarModal(); 
+                    cargarLibros(); 
                 }
-            } catch (error) { alert('Error de conexión con el servidor'); }
+            } catch (error) { 
+                console.error(error);
+                alert('Error al guardar el libro o el stock'); 
+            }
         });
 
         document.addEventListener('DOMContentLoaded', () => {
