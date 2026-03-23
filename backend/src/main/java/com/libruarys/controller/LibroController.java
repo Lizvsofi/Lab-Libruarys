@@ -18,23 +18,23 @@ public class LibroController {
 
     @Autowired
     private LibroRepository libroRepository;
-
+// Obtener todos los libros
     @GetMapping
     public List<Libro> getAllLibros() {
         return libroRepository.findAll();
     }
-
+//Obtener libros por categoría
     @GetMapping("/categoria/{categoria}")
     public List<Libro> getLibrosByCategoria(@PathVariable String categoria) {
         return libroRepository.findByCategoria(categoria);
     }
-
+//Obtener un libro por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Libro> getLibroById(@PathVariable Integer id) {
         Optional<Libro> libro = libroRepository.findById(id);
         return libro.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-
+//Crear un nuevo libro
     @PostMapping
     public ResponseEntity<?> createLibro(@RequestBody Libro libro) {
         try {
@@ -47,6 +47,7 @@ public class LibroController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
+//Actualizar un libro existente
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLibro(@PathVariable Integer id, @RequestBody Libro libro) {
@@ -64,7 +65,7 @@ public class LibroController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-
+  // Eliminar un libro
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLibro(@PathVariable Integer id) {
         try {
