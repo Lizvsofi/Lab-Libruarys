@@ -1,9 +1,9 @@
-/* --- NUEVA BARRA ADMINISTRADOR (MOSTAZA) --- */
+/* --- NUEVA BARRA ADMINISTRADOR --- */
 .navbar-admin {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e9bc60; /* Color Mostaza */
+    background-color: #e9dfc8; /* Color Mostaza */
     padding: 10px 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     position: sticky;
@@ -28,7 +28,7 @@
 .logo-admin-text {
     font-weight: bold; 
     font-size: 1.3rem; 
-    color: #ffffff;
+    color: #b8860B;
 }
 
 .nav-admin-links {
@@ -63,7 +63,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #ffffff;
+    background-color: #cfb68e;
     min-width: 180px;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     list-style: none;
@@ -102,7 +102,7 @@
     display: none;
     cursor: pointer;
     font-size: 24px;
-    color: white;
+    color: #7f5539;
 }
 
 @media (max-width: 768px) {
@@ -112,7 +112,7 @@
         flex-direction: column; 
         position: absolute; 
         top: 70px; right: 0; 
-        background: #e9bc60; 
+        background: #b08968; 
         width: 100%; padding: 20px; 
     }
     .nav-admin-links.active { display: flex; }
