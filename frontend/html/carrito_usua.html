@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <style>
-        /* --- CORRECCIÓN DEL MENÚ DESPLEGABLE (IDÉNTICO AL CATÁLOGO) --- */
+        /* --- CORRECCIÓN DEL MENÚ DESPLEGABLE --- */
         .dropdown {
             position: relative;
             display: flex;
@@ -35,23 +35,8 @@
             z-index: 3000;
         }
 
-        .dropdown::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            height: 15px;
-        }
-
         .dropdown:hover .dropdown-menu {
             display: block;
-        }
-
-        .dropdown-menu li {
-            display: block;
-            width: 100%;
-            padding: 0;
         }
 
         .dropdown-menu li a {
@@ -67,7 +52,6 @@
             background-color: #f1f1f1;
         }
 
-        /* --- ESTILOS DEL CARRITO Y PANEL DE PAGO --- */
         body {
             margin:0;
             font-family: Arial, Helvetica, sans-serif;
@@ -155,7 +139,6 @@
             pointer-events: none;
             z-index: 4000;
         }
-        .mensaje.error { background: #f44336; }
         .mensaje.mostrar { opacity: 1; }
     </style>
 </head>
@@ -165,7 +148,7 @@
     <nav class="navbar">
         <a href="generos_usua.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
             <div class="logo" style="display: flex; align-items: center; gap: 10px;">
-                <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+                <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys" style="width: 40px; border-radius: 50%;"/>
                 <span style="font-weight: bold; font-size: 1.2rem; color: #7f5539;">Libruarys</span>
             </div>
         </a>
@@ -222,7 +205,9 @@
         }
         function toggleDropdown(event) {
             event.preventDefault();
-            document.getElementById("generosDropdown").classList.toggle("show");
+            // Esto permite que el hover de CSS siga funcionando pero añade soporte para click
+            const menu = document.querySelector("#generosDropdown .dropdown-menu");
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
         // --- LÓGICA DEL CARRITO ---
@@ -239,7 +224,7 @@
 
             const agrupado = new Map();
             carrito.forEach(item => {
-                const id = Number(item.id);
+                const id = item.id;
                 if (agrupado.has(id)) {
                     agrupado.get(id).cantidad += 1;
                     agrupado.get(id).precioTotal += Number(item.precio);
@@ -270,71 +255,92 @@
                 totalPrecio += item.precioTotal;
             });
 
-            totalLibrosSpan.textContent = totalLibros;
-            totalPrecioSpan.textContent = totalPrecio.toFixed(2);
+            if(totalLibrosSpan) totalLibrosSpan.textContent = totalLibros;
+            if(totalPrecioSpan) totalPrecioSpan.textContent = totalPrecio.toFixed(2);
             if(contadorNav) contadorNav.textContent = totalLibros;
 
             document.querySelectorAll('.quitar').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    const nuevoCarrito = carrito.filter(item => Number(item.id) !== id);
+                btn.onclick = function() {
+                    const id = btn.getAttribute('data-id');
+                    const nuevoCarrito = carrito.filter(item => String(item.id) !== String(id));
                     localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
                     mostrarCarrito();
-                });
+                };
             });
         }
 
+        // --- FUNCIÓN DE PAGO ---
         async function pagar() {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             if (carrito.length === 0) {
-                mostrarMensaje('El carrito está vacío', true);
+                alert("El carrito está vacío");
                 return;
             }
 
-            const agrupado = new Map();
+            const mapaAgrupado = new Map();
+            const productosParaEnviar = {};
+
             carrito.forEach(item => {
-                const id = Number(item.id);
-                if (agrupado.has(id)) agrupado.get(id).cantidad++;
-                else agrupado.set(id, { id: id, titulo: item.titulo, precio: Number(item.precio), cantidad: 1 });
+                const id = item.id;
+                // Agrupamos para el Ticket (Visual)
+                if (mapaAgrupado.has(id)) {
+                    mapaAgrupado.get(id).cantidad += 1;
+                } else {
+                    mapaAgrupado.set(id, {
+                        titulo: item.titulo,
+                        precio: parseFloat(item.precio),
+                        cantidad: 1
+                    });
+                }
+                
+                // Agrupamos para el Backend (Spring Boot)
+                if (productosParaEnviar[id]) {
+                    productosParaEnviar[id].cantidad++;
+                } else {
+                    productosParaEnviar[id] = { id: id, cantidad: 1 };
+                }
             });
-            
-            const items = Array.from(agrupado.values());
-            const body = { items: items.map(i => ({ id: i.id, cantidad: i.cantidad })) };
+
+            const cuerpoPeticion = {
+                idLibreria: 133, 
+                items: Object.values(productosParaEnviar)
+            };
 
             try {
                 const response = await fetch('http://localhost:8080/api/carrito/comprar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+                    body: JSON.stringify(cuerpoPeticion)
                 });
-                
+
                 if (response.ok) {
-                    sessionStorage.setItem('ultimaCompra', JSON.stringify({
-                        items: items,
-                        total: items.reduce((acc, i) => acc + (i.precio * i.cantidad), 0),
-                        fecha: new Date().toLocaleString()
-                    }));
+                    const datosTicket = {
+                        fecha: new Date().toLocaleString(),
+                        items: Array.from(mapaAgrupado.values()),
+                        total: parseFloat(document.getElementById('total-precio').textContent)
+                    };
+
+                    sessionStorage.setItem('ultimaCompra', JSON.stringify(datosTicket));
                     localStorage.removeItem('carrito');
-                    mostrarMensaje('Compra realizada con éxito');
-                    setTimeout(() => window.location.href = 'ticket.html', 1500);
+                    
+                    alert("¡Compra exitosa! Generando su ticket...");
+                    window.location.href = 'ticket.html'; 
                 } else {
-                    const data = await response.json();
-                    mostrarMensaje(data.error || 'Error al procesar la compra', true);
+                    const errorData = await response.json();
+                    alert("Error en la compra: " + (errorData.error || "Servidor no disponible"));
                 }
             } catch (error) {
-                mostrarMensaje('Error de conexión con el servidor', true);
+                console.error("Error de conexión:", error);
+                alert("No se pudo conectar con el servidor de Spring Boot.");
             }
         }
 
-        function mostrarMensaje(texto, esError = false) {
-            const mensajeDiv = document.getElementById('mensaje');
-            mensajeDiv.textContent = texto;
-            mensajeDiv.className = esError ? 'mensaje error mostrar' : 'mensaje mostrar';
-            setTimeout(() => mensajeDiv.classList.remove('mostrar'), 3000);
-        }
-
-        document.getElementById('btn-pagar').addEventListener('click', pagar);
-        document.addEventListener('DOMContentLoaded', mostrarCarrito);
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarCarrito();
+            const btnPagar = document.getElementById('btn-pagar');
+            if(btnPagar) btnPagar.onclick = pagar;
+        });
     </script>
 </body>
 </html>

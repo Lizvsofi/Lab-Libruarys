@@ -162,85 +162,110 @@
     <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
     <script>
-        function toggleMenu(){
-            document.getElementById("navLinks").classList.toggle("active");
-        }
+    function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+    }
 
-        function toggleDropdown(event) {
-            event.preventDefault();
-            const dropdown = document.getElementById("generosDropdown");
-            dropdown.classList.toggle("show");
-        }
+    function toggleDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById("generosDropdown");
+        dropdown.classList.toggle("show");
+    }
 
-        // Cierra el menú si haces clic fuera
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown a')) {
-                const dropdowns = document.getElementsByClassName("dropdown");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    dropdowns[i].classList.remove('show');
+    async function cargarLibros() {
+        try {
+            const idLibreria = 133; // Ajusta esto al ID de la sucursal correspondiente
+            const response = await fetch('http://localhost:8080/api/libros/categoria/terror');
+            if (!response.ok) throw new Error('Error al cargar libros');
+            const libros = await response.json();
+            const contenedor = document.getElementById('contenedor-libros');
+            contenedor.innerHTML = '';
+            
+            for (const libro of libros) {
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'tarjeta-libro';
+                tarjeta.setAttribute('data-id', libro.id);
+
+                const imagenSrc = libro.imagen ? `../img/${libro.imagen}` : '../img/logo_libreria.jpeg';
+                
+                // 1. Creamos la estructura básica
+                tarjeta.innerHTML = `
+                    <img src="${imagenSrc}" alt="${libro.titulo}" onerror="this.src='../img/logo_libreria.jpeg'">
+                    <h3>${libro.titulo}</h3>
+                    <p class="autor">${libro.autor}</p>
+                    <p class="precio">$${libro.precio} MXN</p>
+                    <div class="botones">
+                        <button class="cantidad" id="stock-${libro.id}" disabled>Stock: Cargando...</button>
+                        <button class="agregar" data-id="${libro.id}">Agregar</button>
+                    </div>
+                `;
+                contenedor.appendChild(tarjeta);
+
+                // 2. Petición adicional para obtener el stock real de la tabla 'existencia'
+                try {
+                    const resStock = await fetch(`http://localhost:8080/api/existencias/${idLibreria}/${libro.id}`);
+                    const dataStock = await resStock.json();
+                    const botonStock = document.getElementById(`stock-${libro.id}`);
+                    botonStock.textContent = `Stock: ${dataStock.cantidad || 0}`;
+                } catch (errStock) {
+                    console.error("Error al obtener stock del libro " + libro.id);
+                    document.getElementById(`stock-${libro.id}`).textContent = "Stock: N/A";
                 }
             }
+        } catch (error) { 
+            console.error('Error:', error);
+            document.getElementById('contenedor-libros').innerHTML = '<p>Error al conectar con el servidor.</p>';
         }
+    }
 
-        async function cargarLibros() {
-            try {
-                const response = await fetch('http://localhost:8080/api/libros/categoria/terror');
-                if (!response.ok) throw new Error('Error al cargar libros');
-                const libros = await response.json();
-                const contenedor = document.getElementById('contenedor-libros');
-                contenedor.innerHTML = '';
-                
-                libros.forEach(libro => {
-                    const tarjeta = document.createElement('div');
-                    tarjeta.className = 'tarjeta-libro';
-                    const imagenSrc = libro.imagen ? `../img/${libro.imagen}` : '../img/logo_libreria.jpeg';
-                    
-                    tarjeta.innerHTML = `
-                        <img src="${imagenSrc}" alt="${libro.titulo}" onerror="this.src='../img/logo_libreria.jpeg'">
-                        <h3>${libro.titulo}</h3>
-                        <p class="autor">${libro.autor}</p>
-                        <p class="precio">$${libro.precio} MXN</p>
-                        <div class="botones">
-                            <button class="cantidad">Cantidad ${libro.cantidad}</button>
-                            <button class="agregar" data-id="${libro.id}">Agregar</button>
-                        </div>
-                    `;
-                    contenedor.appendChild(tarjeta);
-                });
-            } catch (error) { console.error('Error:', error); }
-        }
+    function inicializarCarrito() {
+        const contador = document.getElementById('contador-carrito');
+        
+        // Delegación de eventos para capturar clics en botones creados dinámicamente
+        document.getElementById('contenedor-libros').addEventListener('click', (e) => {
+            const boton = e.target.closest('.agregar');
+            if (!boton) return;
 
-        function inicializarCarrito() {
-            const contador = document.getElementById('contador-carrito');
+            // Volvemos a leer el carrito actual
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const tarjeta = boton.closest('.tarjeta-libro');
+            
+            // Creamos el objeto libro con el ID capturado del atributo data-id
+            const libro = {
+                id: parseInt(boton.getAttribute('data-id')),
+                titulo: tarjeta.querySelector('h3').textContent,
+                precio: tarjeta.querySelector('.precio').textContent.replace('$', '').replace(' MXN', '').trim(),
+                imagen: tarjeta.querySelector('img').src,
+                cantidad: 1 // Importante para la lógica de pago
+            };
+
+            // Validación de ID
+            if (isNaN(libro.id)) {
+                console.error("Error: El ID del libro no es válido.");
+                return;
+            }
+
+            carrito.push(libro);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            
+            // Actualizar contador visual
             if (contador) contador.textContent = carrito.length;
 
-            document.getElementById('contenedor-libros').addEventListener('click', (e) => {
-                const boton = e.target.closest('.agregar');
-                if (!boton) return;
-
-                const tarjeta = boton.closest('.tarjeta-libro');
-                const libro = {
-                    id: parseInt(boton.getAttribute('data-id')),
-                    titulo: tarjeta.querySelector('h3').textContent,
-                    precio: parseFloat(tarjeta.querySelector('.precio').textContent.replace('$', '').replace(' MXN', '')),
-                    imagen: tarjeta.querySelector('img').src
-                };
-
-                carrito.push(libro);
-                localStorage.setItem('carrito', JSON.stringify(carrito));
-                if (contador) contador.textContent = carrito.length;
-
-                const mensaje = document.getElementById('mensaje-carrito');
-                mensaje.classList.add('mostrar');
-                setTimeout(() => mensaje.classList.remove('mostrar'), 2000);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarLibros();
-            inicializarCarrito();
+            // Mostrar mensaje de confirmación
+            const mensaje = document.getElementById('mensaje-carrito');
+            mensaje.classList.add('mostrar');
+            setTimeout(() => mensaje.classList.remove('mostrar'), 2000);
         });
-    </script>
+
+        // Cargar el contador al iniciar la página
+        const carritoInicial = JSON.parse(localStorage.getItem('carrito')) || [];
+        if (contador) contador.textContent = carritoInicial.length;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarLibros();
+        inicializarCarrito();
+    });
+</script>
 </body>
 </html>

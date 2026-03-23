@@ -1,4 +1,5 @@
 package com.libruarys.model;
+
 import java.math.BigDecimal;
 import jakarta.persistence.*;
 
@@ -24,18 +25,16 @@ public class Libro {
     private String editorial;
 
     @Column(name = "precio", precision = 10, scale = 2)
-private BigDecimal precio;
+    private BigDecimal precio;
 
     @Column(name = "categoria", length = 100)
     private String categoria;
 
-    @Column(name = "cantidad")
-    private Integer cantidad;
-
     @Column(name = "imagen_url", length = 255)
     private String imagen;
 
-    
+    // --- GETTERS Y SETTERS ---
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -56,9 +55,6 @@ private BigDecimal precio;
 
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
-
-    public Integer getCantidad() { return cantidad; }
-    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
 
     public String getImagen() { return imagen; }
     public void setImagen(String imagen) { this.imagen = imagen; }
