@@ -70,33 +70,8 @@ function toggleMenu(){
     document.getElementById("navLinks").classList.toggle("active");
 }
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const correo = document.getElementById('correoLogin').value;
-    const contrasena = document.getElementById('passLogin').value;
-
-    try {
-        const response = await fetch('http://localhost:8080/api/usuarios/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ correo, contrasena }) 
-        });
-
-        if (response.ok) {
-            const respuesta = await response.json(); // { nombre, redirect, rol }
-            alert("¡Bienvenido a Libruarys, " + respuesta.nombre + "!");
-            
-            // Redirige según lo que indique el backend (generos_usua.html o generos_admin.html)
-            window.location.href = respuesta.redirect; 
-        } else {
-            const errorData = await response.json();
-            alert(errorData.error || "Correo o contraseña incorrectos.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Error al conectar con el servidor.");
-    }
-});
+// Usa la función validarLogin que ya está en AnaJS.js
+document.getElementById('loginForm').addEventListener('submit', validarLogin);
 </script>
 </body>
 </html>

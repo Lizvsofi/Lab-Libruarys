@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,31 +31,34 @@ public class UsuarioController {
         Optional<Usuario> userOpt = usuarioRepository.findByCorreo(correo);
         
         if (userOpt.isPresent()) {
-            Usuario usuario = userOpt.get(); 
-            if (usuario.getCotrasena().equals(contrasena)) {
-                return ResponseEntity.ok(Map.of(
-                    "nombre", usuario.getNombre(),
-                    "redirect", "generos_usua.html",  
-                    "rol", "USUARIO"
-                ));
-            }
-        }
+    Usuario usuario = userOpt.get(); 
+    if (usuario.getCotrasena().equals(contrasena)) {
+        return ResponseEntity.ok(Map.of(
+            "nombre", usuario.getNombre(),
+            "idCliente", usuario.getId(),   // ← agregar
+            "redirect", "generos_usua.html",  
+            "rol", "USUARIO"
+        ));
+    }
+}
 
         Optional<Libreria> libOpt = libreriaRepository.findByCorreo(correo);
         
         if (libOpt.isPresent()) {
-            Libreria libreria = libOpt.get(); 
-            if (libreria.getCotrasena().equals(contrasena)) {
-                return ResponseEntity.ok(Map.of(
-                    "nombre", libreria.getContacto(),
-                    "redirect", "generos_admin.html", 
-                    "rol", "ADMIN"
-                ));
-            }
-        }
+    Libreria libreria = libOpt.get(); 
+    if (libreria.getCotrasena().equals(contrasena)) {
+        return ResponseEntity.ok(Map.of(
+            "nombre", libreria.getContacto(),
+            "idLibreria", libreria.getId(),   // ← si se necesita
+            "redirect", "generos_admin.html", 
+            "rol", "ADMIN"
+        ));
+    }
+}
         
         return ResponseEntity.status(401).body(Map.of("error", "Correo o contraseña incorrectos"));
     }
+    
     @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody Usuario nuevoUsuario) {
         try {
@@ -63,5 +67,17 @@ public class UsuarioController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("error", "Error al guardar"));
         }
+    }
+
+    @GetMapping
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

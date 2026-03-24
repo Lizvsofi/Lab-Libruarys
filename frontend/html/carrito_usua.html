@@ -271,69 +271,77 @@
 
         // --- FUNCIÓN DE PAGO ---
         async function pagar() {
-            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            if (carrito.length === 0) {
-                alert("El carrito está vacío");
-                return;
-            }
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
 
-            const mapaAgrupado = new Map();
-            const productosParaEnviar = {};
+    // Obtener el ID del cliente desde sessionStorage
+    const idCliente = sessionStorage.getItem('idCliente');
+    if (!idCliente) {
+        alert("No se ha identificado al cliente. Por favor, inicia sesión nuevamente.");
+        return;
+    }
 
-            carrito.forEach(item => {
-                const id = item.id;
-                // Agrupamos para el Ticket (Visual)
-                if (mapaAgrupado.has(id)) {
-                    mapaAgrupado.get(id).cantidad += 1;
-                } else {
-                    mapaAgrupado.set(id, {
-                        titulo: item.titulo,
-                        precio: parseFloat(item.precio),
-                        cantidad: 1
-                    });
-                }
-                
-                // Agrupamos para el Backend (Spring Boot)
-                if (productosParaEnviar[id]) {
-                    productosParaEnviar[id].cantidad++;
-                } else {
-                    productosParaEnviar[id] = { id: id, cantidad: 1 };
-                }
+    const mapaAgrupado = new Map();
+    const productosParaEnviar = {};
+
+    carrito.forEach(item => {
+        const id = item.id;
+        // Agrupamos para el Ticket (Visual)
+        if (mapaAgrupado.has(id)) {
+            mapaAgrupado.get(id).cantidad += 1;
+        } else {
+            mapaAgrupado.set(id, {
+                titulo: item.titulo,
+                precio: parseFloat(item.precio),
+                cantidad: 1
             });
+        }
+        
+        // Agrupamos para el Backend (Spring Boot)
+        if (productosParaEnviar[id]) {
+            productosParaEnviar[id].cantidad++;
+        } else {
+            productosParaEnviar[id] = { id: id, cantidad: 1 };
+        }
+    });
 
-            const cuerpoPeticion = {
-                idLibreria: 133, 
-                items: Object.values(productosParaEnviar)
+    const cuerpoPeticion = {
+        idLibreria: 133,
+        idCliente: parseInt(idCliente),   // <-- AGREGAR ESTA LÍNEA
+        items: Object.values(productosParaEnviar)
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/api/carrito/comprar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cuerpoPeticion)
+        });
+
+        if (response.ok) {
+            const datosTicket = {
+                fecha: new Date().toLocaleString(),
+                items: Array.from(mapaAgrupado.values()),
+                total: parseFloat(document.getElementById('total-precio').textContent)
             };
 
-            try {
-                const response = await fetch('http://localhost:8080/api/carrito/comprar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(cuerpoPeticion)
-                });
-
-                if (response.ok) {
-                    const datosTicket = {
-                        fecha: new Date().toLocaleString(),
-                        items: Array.from(mapaAgrupado.values()),
-                        total: parseFloat(document.getElementById('total-precio').textContent)
-                    };
-
-                    sessionStorage.setItem('ultimaCompra', JSON.stringify(datosTicket));
-                    localStorage.removeItem('carrito');
-                    
-                    alert("¡Compra exitosa! Generando su ticket...");
-                    window.location.href = 'ticket.html'; 
-                } else {
-                    const errorData = await response.json();
-                    alert("Error en la compra: " + (errorData.error || "Servidor no disponible"));
-                }
-            } catch (error) {
-                console.error("Error de conexión:", error);
-                alert("No se pudo conectar con el servidor de Spring Boot.");
-            }
+            sessionStorage.setItem('ultimaCompra', JSON.stringify(datosTicket));
+            localStorage.removeItem('carrito');
+            
+            alert("¡Compra exitosa! Generando su ticket...");
+            window.location.href = 'ticket.html'; 
+        } else {
+            const errorData = await response.json();
+            alert("Error en la compra: " + (errorData.error || "Servidor no disponible"));
         }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        alert("No se pudo conectar con el servidor de Spring Boot.");
+    }
+}
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {

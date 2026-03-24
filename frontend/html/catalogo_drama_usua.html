@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Libruarys - Acción</title>
+    <title>Libruarys - Drama</title>
     <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="../css/styless_usua.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -157,7 +157,7 @@
         </ul>
     </nav>
 
-    <h1 style="text-align: center; color: #7f5539; margin-top: 20px;">Catálogo Acción</h1>
+    <h1 style="text-align: center; color: #7f5539; margin-top: 20px;">Catálogo Drama</h1>
     <div class="catalogo-accion" id="contenedor-libros"></div>
     <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
@@ -175,7 +175,7 @@
     async function cargarLibros() {
         try {
             const idLibreria = 133; 
-            const response = await fetch('http://localhost:8080/api/libros/categoria/accion');
+            const response = await fetch('http://localhost:8080/api/libros/categoria/drama');
             if (!response.ok) throw new Error('Error al cargar libros');
             const libros = await response.json();
             const contenedor = document.getElementById('contenedor-libros');

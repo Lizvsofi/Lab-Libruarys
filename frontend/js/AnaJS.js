@@ -2,8 +2,8 @@ async function validarLogin(event) {
     event.preventDefault();
 
     const datosLogin = {
-        correo: document.getElementById("correoLogin").value,   // ID corregido
-        contrasena: document.getElementById("passLogin").value // ID corregido
+        correo: document.getElementById("correoLogin").value,
+        contrasena: document.getElementById("passLogin").value
     };
 
     try {
@@ -14,14 +14,19 @@ async function validarLogin(event) {
         });
 
         if (response.ok) {
-            const respuesta = await response.json(); // Recibe { nombre, redirect, rol }
+            const respuesta = await response.json();
             alert("¡Bienvenido a Libruarys, " + respuesta.nombre + "!");
             
             // Guardar info opcional
             localStorage.setItem("nombreUsuario", respuesta.nombre);
             localStorage.setItem("rol", respuesta.rol);
+            
+            // Guardar el idCliente (si existe) en sessionStorage
+            if (respuesta.idCliente) {
+                sessionStorage.setItem("idCliente", respuesta.idCliente);
+            }
 
-            // Redirige según lo que indique el backend (generos_usua.html o generos_admin.html)
+            // Redirige según lo que indique el backend
             window.location.href = respuesta.redirect; 
         } else {
             const errorData = await response.json();
