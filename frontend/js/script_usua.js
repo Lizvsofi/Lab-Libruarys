@@ -9,22 +9,37 @@ document.getElementById("submenu").classList.toggle("show");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const contador = document.getElementById("contador-carrito");
+    const botones = document.querySelectorAll(".agregar");
 
-/* animación de tarjetas */
+    botones.forEach((boton) => {
+        boton.addEventListener("click", () => {
+            const tarjeta = boton.closest(".tarjeta-libro");
+            
+            // EXTRAEMOS EL ID DEL ATRIBUTO data-id DEL HTML
+            const idLibro = tarjeta.getAttribute("data-id");
 
-const cards = document.querySelectorAll(".card");
+            if (!idLibro) {
+                console.error("Error: La tarjeta no tiene data-id");
+                return;
+            }
 
-cards.forEach((card, index) => {
+            const libro = {
+                id: parseInt(idLibro), 
+                titulo: tarjeta.querySelector("h3").textContent,
+                precio: tarjeta.querySelector(".precio").textContent.replace("$", ""),
+                imagen: tarjeta.querySelector("img").src,
+                cantidad: 1
+            };
 
-card.style.opacity="0";
-card.style.transform="translateY(20px)";
+            carrito.push(libro);
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            if(contador) contador.textContent = carrito.length;
 
-setTimeout(()=>{
-card.style.transition="all .5s";
-card.style.opacity="1";
-card.style.transform="translateY(0)";
-},index*200);
-
+            alert("Libro añadido al carrito");
+        });
+    });
 });
 
 
@@ -47,11 +62,12 @@ botones.forEach((boton)=>{
 boton.addEventListener("click",()=>{
 
 const tarjeta = boton.closest(".tarjeta-libro");
-
 const libro = {
-titulo: tarjeta.querySelector("h3").textContent,
-precio: tarjeta.querySelector(".precio").textContent,
-imagen: tarjeta.querySelector("img").src
+    id: parseInt(tarjeta.getAttribute("data-id")), // <-- ESTO ES VITAL
+    titulo: tarjeta.querySelector("h3").textContent,
+    precio: tarjeta.querySelector(".precio").textContent,
+    imagen: tarjeta.querySelector("img").src,
+    cantidad: 1
 };
 
 carrito.push(libro);
@@ -75,7 +91,6 @@ mensaje.classList.remove("mostrar");
 
 });
 
-});
 document.addEventListener("DOMContentLoaded",()=>{
 
 const contenedor = document.getElementById("lista-carrito");

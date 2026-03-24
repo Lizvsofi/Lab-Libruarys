@@ -6,11 +6,12 @@
     <title>Libruarys - Infantil (Admin)</title>
     <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="../css/styless_admin.css">
+    <link rel="stylesheet" href="../css/barra.css"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         
     <style>
         body{
@@ -67,33 +68,35 @@
             margin: 2px 0;
             line-height: 1.2;
         }
-        .logo-link {
-    text-decoration: none; 
-    color: inherit;        
-    display: flex;         
-    align-items: center;
-}
-.logo-link:hover {
-    opacity: 0.8;          
-}
+        .logo-admin-link {
+            text-decoration: none; 
+            color: inherit;         
+            display: flex;          
+            align-items: center;
+        }
+        .logo-admin-link:hover {
+            opacity: 0.8;           
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="generos_admin.html" class="logo-link">
-    <div class="logo">
-        <img src="../img/logo.jpeg" alt="Logo de Libruarys"/>
-        <span>Libruarys</span>
-    </div>
-</a>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-        <ul class="nav-links" id="navLinks">
-            <li class="dropdown"></li>
-            <li class="dropdown">
-                <i class="material-symbols-outlined" style="font-size: 24px;color:#7f5539;">book_5</i>
-                <a href="../html/generos_admin.html" onclick="toggleDropdown(event)" class="active"></a>
-                <li><a href="../html/generos_admin.html">Géneros</a></li>
-                <ul class="dropdown-menu" id="submenu">
+    <div class="fondo"></div>
+
+    <nav class="navbar-admin">
+        <a href="generos_admin.html" class="logo-admin-link">
+            <div class="logo-admin">
+                <img src="../img/logo_libreria.jpeg" alt="Logo" class="logo-admin-img"/>
+            </div>
+            <span class="logo-admin-text">Libruarys</span>
+        </a>
+
+        <div class="hamburger-admin" onclick="toggleMenu()">☰</div>
+
+        <ul class="nav-admin-links" id="navLinks">
+            <li class="nav-admin-item dropdown-admin" id="generosDropdown">
+                <span class="material-symbols-outlined" style="color: #7f5539;">library_books</span>
+                <a href="#" style="color: #7f5539;" onclick="toggleDropdown(event)">Géneros ▾</a>
+                <ul class="dropdown-admin-menu">
                     <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
                     <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
                     <li><a href="../html/catalogo_aventura_admin.html">Aventura</a></li>
@@ -105,36 +108,21 @@
                     <li><a href="../html/catalogo_romance_admin.html">Romance</a></li>
                 </ul>
             </li>
-            <i class="material-icons" style="font-size:24px;color: #7f5539;">shopping_cart</i>
-            <li>
-                <a href="../html/carrito_admin.html">
-                    Carrito <span id="contador-carrito">0</span>
-                </a>
+
+            <li class="nav-admin-item">
+                <span class="material-symbols-outlined" style="color: #d32f2f;">logout</span>
+                <a href="index.html" class="btn-admin-salir" onclick="localStorage.clear();">Cerrar Sesión</a>
             </li>
         </ul>
     </nav>
 
-    <script>
-        function toggleMenu(){
-            document.getElementById("navLinks").classList.toggle("active");
-        }
-        function toggleDropdown(event) {
-            event.preventDefault();
-            document.getElementById("submenu").classList.toggle("show");
-        }
-    </script>
-
-    <div class="fondo"></div>
-
-    <h1>Catálogo Infantil</h1>
+    <h1 style="text-align: center; color: #5d4037; margin-top: 20px;">Catálogo Infantil</h1>
 
     <div style="text-align: right;">
         <button class="btn-agregar-libro" id="btnAgregarLibro">+ Agregar Libro</button>
     </div>
 
     <div class="catalogo-accion" id="contenedor-libros"></div>
-
-    <div id="mensaje-carrito" class="mensaje-carrito">✔ Libro agregado al carrito</div>
 
     <div id="modalLibro" class="modal">
         <div class="modal-content">
@@ -146,18 +134,34 @@
                 <input type="text" id="editorial" placeholder="Editorial" required>
                 <input type="number" id="precio" placeholder="Precio" step="0.01" required>
                 <input type="number" id="cantidad" placeholder="Cantidad" required>
-                <input type="text" id="imagen" placeholder="Ruta de imagen (ej. ../img/harry_potter.jpg)" required>
+                <input type="text" id="imagen" placeholder="Ruta de imagen (ej. infantil_1.jpg)" required>
                 <input type="text" id="edicion" placeholder="Edición (ej. 1, 2, 3...)">
                 <input type="hidden" id="categoria" value="infantil">
                 <div style="margin-top:10px;">
-                    <button type="submit">Guardar</button>
-                    <button type="button" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" style="background:#7f5539; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Guardar</button>
+                    <button type="button" onclick="cerrarModal()" style="padding:8px 15px; border-radius:4px; cursor:pointer;">Cancelar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
+        const ID_LIBRERIA = 133; // ID fijo de sucursal
+
+        function toggleMenu(){
+            document.getElementById("navLinks").classList.toggle("active");
+        }
+        function toggleDropdown(event) {
+            event.preventDefault();
+            document.getElementById("generosDropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-admin a')) {
+                const drop = document.getElementById("generosDropdown");
+                if(drop && drop.classList.contains('show')) drop.classList.remove('show');
+            }
+        }
+
         async function cargarLibros() {
             try {
                 const response = await fetch('http://localhost:8080/api/libros/categoria/infantil');
@@ -166,19 +170,27 @@
                 const contenedor = document.getElementById('contenedor-libros');
                 contenedor.innerHTML = '';
                 
-                libros.forEach(libro => {
+                for (const libro of libros) {
+                    // Consultar stock real desde la tabla existencia
+                    let stockActual = 0;
+                    try {
+                        const resStock = await fetch(`http://localhost:8080/api/existencias/${ID_LIBRERIA}/${libro.id}`);
+                        if(resStock.ok) {
+                            const dataStock = await resStock.json();
+                            stockActual = dataStock.cantidad;
+                        }
+                    } catch(e) { console.error("No se pudo obtener stock para libro " + libro.id); }
+
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'tarjeta-libro';
                     tarjeta.setAttribute('data-id', libro.id);
-                    
                     const codigo = 'L-' + libro.id.toString().padStart(3, '0');
-                    
                     const edicionTexto = libro.edicion ? `<p class="edicion"><strong>Edición:</strong> ${libro.edicion}</p>` : '';
                     
                     tarjeta.innerHTML = `
                         <div class="top-libro">
                             <span class="codigo-libro">${codigo}</span>
-                            <button class="editar-libro" onclick="editarLibro(${libro.id})">Editar</button>
+                            <button class="editar-libro" onclick="editarLibro(${libro.id}, ${stockActual})">Editar</button>
                         </div>
                         <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
                              onerror="this.src='../img/logo_libreria.jpeg'">
@@ -188,14 +200,13 @@
                             <p class="editorial"><strong>Editorial:</strong> ${libro.editorial}</p>
                             ${edicionTexto}
                             <p class="precio"><strong>Precio:</strong> $${libro.precio} MXN</p>
-                            <button class="agregar" data-id="${libro.id}">Agregar al carrito</button>
+                            <p class="stock"><strong>Disponible:</strong> ${stockActual}</p>
                         </div>
                     `;
                     contenedor.appendChild(tarjeta);
-                });
+                }
             } catch (error) {
                 console.error('Error:', error);
-                alert('No se pudieron cargar los libros');
             }
         }
 
@@ -206,28 +217,22 @@
             document.getElementById('modalLibro').style.display = 'block';
         }
 
-        async function editarLibro(id) {
+        async function editarLibro(id, stockActual) {
             try {
                 const response = await fetch(`http://localhost:8080/api/libros/${id}`);
-                if (!response.ok) throw new Error('No se pudo cargar el libro');
                 const libro = await response.json();
-                
                 document.getElementById('modalTitulo').innerText = 'Editar Libro';
                 document.getElementById('libroId').value = libro.id;
                 document.getElementById('titulo').value = libro.titulo;
                 document.getElementById('autor').value = libro.autor;
                 document.getElementById('editorial').value = libro.editorial;
                 document.getElementById('precio').value = libro.precio;
-                document.getElementById('cantidad').value = libro.cantidad;
+                document.getElementById('cantidad').value = stockActual; // Cargar stock real en el input
                 document.getElementById('imagen').value = libro.imagen;
-                document.getElementById('edicion').value = libro.edicion;
+                document.getElementById('edicion').value = libro.edicion || '';
                 document.getElementById('categoria').value = libro.categoria;
-                
                 document.getElementById('modalLibro').style.display = 'block';
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al cargar el libro para editar');
-            }
+            } catch (error) { alert('Error al cargar libro'); }
         }
 
         function cerrarModal() {
@@ -236,82 +241,58 @@
 
         document.getElementById('formLibro').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+            const id = document.getElementById('libroId').value;
+            const cantidadForm = parseInt(document.getElementById('cantidad').value);
+
             const libroData = {
-                id: document.getElementById('libroId').value || null,
+                id: id || null,
                 titulo: document.getElementById('titulo').value,
                 autor: document.getElementById('autor').value,
                 editorial: document.getElementById('editorial').value,
                 precio: parseFloat(document.getElementById('precio').value),
-                cantidad: parseInt(document.getElementById('cantidad').value),
                 imagen: document.getElementById('imagen').value,
                 edicion: document.getElementById('edicion').value,
-                categoria: document.getElementById('categoria').value,
-                nombre: document.getElementById('titulo').value // opcional
+                categoria: document.getElementById('categoria').value
             };
 
-            const method = libroData.id ? 'PUT' : 'POST';
-            const url = libroData.id 
-                ? `http://localhost:8080/api/libros/${libroData.id}`
-                : 'http://localhost:8080/api/libros';
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `http://localhost:8080/api/libros/${id}` : 'http://localhost:8080/api/libros';
 
             try {
+                // 1. Guardar datos del libro
                 const response = await fetch(url, {
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(libroData)
                 });
-                
+
                 if (response.ok) {
-                    cerrarModal();
-                    cargarLibros(); // Recargar la lista
-                } else {
-                    const error = await response.text();
-                    alert('Error al guardar: ' + error);
+                    const libroConfirmado = await response.json();
+                    
+                    // 2. Guardar cantidad en la tabla 'existencia'
+                    const existenciaData = {
+                        id_libreria: ID_LIBRERIA,
+                        id_libro: libroConfirmado.id,
+                        cantidad: cantidadForm
+                    };
+
+                    await fetch(`http://localhost:8080/api/existencias`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(existenciaData)
+                    });
+
+                    cerrarModal(); 
+                    cargarLibros(); 
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error de conexión');
+            } catch (error) { 
+                console.error(error);
+                alert('Error al guardar el libro o el stock'); 
             }
         });
 
-        function inicializarCarrito() {
-            const contenedor = document.getElementById('contenedor-libros');
-            const contador = document.getElementById('contador-carrito');
-            const mensaje = document.getElementById('mensaje-carrito');
-
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            if (contador) contador.textContent = carrito.length;
-
-            contenedor.addEventListener('click', (e) => {
-                const boton = e.target.closest('.agregar');
-                if (!boton) return;
-
-                const tarjeta = boton.closest('.tarjeta-libro');
-                if (!tarjeta) return;
-
-                const titulo = tarjeta.querySelector('.nombre-libro').textContent;
-                const precioTexto = tarjeta.querySelector('.precio').textContent;
-                const precio = parseFloat(precioTexto.replace('Precio: $', '').replace(' MXN', ''));
-                const imagen = tarjeta.querySelector('img').src;
-
-                const libro = { titulo, precio, imagen };
-                carrito.push(libro);
-                localStorage.setItem('carrito', JSON.stringify(carrito));
-                if (contador) contador.textContent = carrito.length;
-
-                if (mensaje) {
-                    mensaje.classList.add('mostrar');
-                    setTimeout(() => {
-                        mensaje.classList.remove('mostrar');
-                    }, 2000);
-                }
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             cargarLibros();
-            inicializarCarrito();
             document.getElementById('btnAgregarLibro').addEventListener('click', abrirModalAgregar);
         });
     </script>

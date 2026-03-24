@@ -1,0 +1,119 @@
+/* --- NUEVA BARRA ADMINISTRADOR --- */
+.navbar-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e9dfc8; /* Color Mostaza */
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+.logo-admin-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-admin-img {
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.logo-admin-text {
+    font-weight: bold; 
+    font-size: 1.3rem; 
+    color: #b8860B;
+}
+
+.nav-admin-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+}
+
+.nav-admin-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.nav-admin-item a {
+    text-decoration: none;
+    color: #ffffff; 
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-admin-item a:hover {
+    color: #5d4037; 
+}
+
+/* --- DROPDOWN GÉNEROS --- */
+.dropdown-admin-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #cfb68e;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 4px;
+}
+/* Esto hace que el menú aparezca al pasar el mouse por el padre */
+.dropdown-admin:hover .dropdown-admin-menu {
+    display: block !important;
+}
+
+.dropdown-admin-menu li {
+    display: block;
+    padding: 8px 16px;
+}
+
+.dropdown-admin-menu li a {
+    color: #7f5539 !important; 
+    font-weight: normal !important;
+}
+
+.dropdown-admin.show .dropdown-admin-menu {
+    display: block;
+}
+
+.btn-admin-salir {
+    color: #d32f2f !important;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.hamburger-admin {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #7f5539;
+}
+
+@media (max-width: 768px) {
+    .hamburger-admin { display: block; }
+    .nav-admin-links { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 70px; right: 0; 
+        background: #b08968; 
+        width: 100%; padding: 20px; 
+    }
+    .nav-admin-links.active { display: flex; }
+}

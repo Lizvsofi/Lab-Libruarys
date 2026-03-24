@@ -1,0 +1,16 @@
+com\libruarys\controller\LibroController.class
+com\libruarys\controller\CarritoController.class
+com\libruarys\controller\UsuarioController.class
+com\libruarys\model\Libro.class
+com\libruarys\repository\ExistenciaRepository.class
+com\libruarys\model\Usuario.class
+com\libruarys\repository\UsuarioRepository.class
+com\libruarys\model\Libreria.class
+com\libruarys\controller\ExistenciaController.class
+com\libruarys\controller\CarritoController$CompraRequest.class
+com\libruarys\controller\CarritoController$CompraRequest$ItemCompra.class
+com\libruarys\LibruarysApplication.class
+com\libruarys\model\ExistenciaId.class
+com\libruarys\repository\LibreriaRepository.class
+com\libruarys\model\Existencia.class
+com\libruarys\repository\LibroRepository.class
