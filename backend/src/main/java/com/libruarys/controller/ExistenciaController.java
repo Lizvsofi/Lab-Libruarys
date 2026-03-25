@@ -20,7 +20,7 @@ public class ExistenciaController {
     // Método existente para consultar stock (GET)
     @GetMapping("/{idLibreria}/{idLibro}")
     public ResponseEntity<?> getStock(@PathVariable Integer idLibreria, @PathVariable Integer idLibro) {
-        return existenciaRepository.findById_IdLibreriaAndId_IdLibro(idLibreria, idLibro)
+        return existenciaRepository.findByIdIdLibreriaAndIdIdLibro(idLibreria, idLibro)
                 .map(e -> ResponseEntity.ok(Map.of("cantidad", e.getCantidad())))
                 .orElse(ResponseEntity.ok(Map.of("cantidad", 0)));
     }

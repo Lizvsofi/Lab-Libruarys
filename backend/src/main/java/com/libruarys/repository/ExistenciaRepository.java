@@ -5,9 +5,13 @@ import com.libruarys.model.ExistenciaId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import java.util.List;   // <-- IMPORTANTE: agregar esta importación
 
 @Repository
 public interface ExistenciaRepository extends JpaRepository<Existencia, ExistenciaId> {
-    // Busca por los campos internos de la llave compuesta
-    Optional<Existencia> findById_IdLibreriaAndId_IdLibro(Integer idLibreria, Integer idLibro);
+    // Método correcto para buscar por id_libreria e id_libro
+    Optional<Existencia> findByIdIdLibreriaAndIdIdLibro(Integer idLibreria, Integer idLibro);
+    
+    // Método para buscar todas las existencias de un libro (sin importar librería)
+    List<Existencia> findByIdIdLibro(Integer idLibro);
 }

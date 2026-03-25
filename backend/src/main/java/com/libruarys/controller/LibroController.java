@@ -1,7 +1,12 @@
 package com.libruarys.controller;
 
+import com.libruarys.model.Existencia;
 import com.libruarys.model.Libro;
+import com.libruarys.model.Orden;
+import com.libruarys.repository.ExistenciaRepository;
 import com.libruarys.repository.LibroRepository;
+import com.libruarys.repository.OrdenRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,11 @@ import java.util.Optional;
 @RequestMapping("/api/libros")
 @CrossOrigin(origins = "*")
 public class LibroController {
+    @Autowired
+    private ExistenciaRepository existenciaRepository;
+
+    @Autowired
+    private OrdenRepository ordenRepository;
 
     @Autowired
     private LibroRepository libroRepository;
@@ -66,18 +76,25 @@ public class LibroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteLibro(@PathVariable Integer id) {
-        try {
-            if (!libroRepository.existsById(id)) {
-                return ResponseEntity.notFound().build();
-            }
-            libroRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return ResponseEntity.status(500).body(errorResponse);
+public ResponseEntity<?> deleteLibro(@PathVariable Integer id) {
+    try {
+        if (!libroRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
         }
+        // Eliminar existencias asociadas
+        List<Existencia> existencias = existenciaRepository.findByIdIdLibro(id);
+        existenciaRepository.deleteAll(existencias);
+        
+        // Eliminar órdenes asociadas
+        List<Orden> ordenes = ordenRepository.findByIdLibro(id);
+        ordenRepository.deleteAll(ordenes);
+        
+        // Finalmente eliminar el libro
+        libroRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
     }
+}
 }
