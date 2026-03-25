@@ -190,6 +190,7 @@
                         <div class="top-libro">
                             <span class="codigo-libro">${codigo}</span>
                             <button class="editar-libro" onclick="editarLibro(${libro.id}, ${stockActual})">Editar</button>
+                            <button class="eliminar-libro" onclick="eliminarLibro(${libro.id})">Eliminar</button>
                         </div>
                         <img src="../img/${libro.imagen}" alt="${libro.titulo}" 
                              onerror="this.src='../img/logo_libreria.jpeg'">
@@ -208,6 +209,21 @@
                 console.error('Error:', error);
             }
         }
+        async function eliminarLibro(id) {
+    if (!confirm("¿Seguro que deseas eliminar este libro?")) return;
+    try {
+        const response = await fetch(`http://localhost:8080/api/libros/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+            alert("Libro eliminado");
+            cargarLibros();  // recargar la lista
+        } else {
+            alert("Error al eliminar");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error de conexión");
+    }
+}
 
         function abrirModalAgregar() {
             document.getElementById('modalTitulo').innerText = 'Agregar Nuevo Libro';
