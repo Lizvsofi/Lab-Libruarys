@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de compras - Admin</title>
+    <link rel="shortcut icon" href="../img/logo_libreria.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styless_admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        /* ===== ESTILOS COPIADOS DE generos_admin.html ===== */
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .fondo {
+            background-image: url("../img/logo.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.30; 
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9dfc8;
+            padding: 10px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+        }
+
+        .nav-links li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .nav-links li:last-child .dropdown-menu {
+        left: auto;
+        right: 0;
+    }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #c5a15d; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #5d4037; 
+        }
+
+        .logo img {
+            height: 55px;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .logo span {
+            font-weight: bold; 
+            font-size: 1.3rem; 
+            color: #b8860B;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #cfb68e;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .dropdown-menu li {
+            display: block;
+            padding: 8px 16px;
+        }
+
+        .dropdown-menu li a {
+            color: #7f5539; 
+            font-weight: normal;
+            display: block;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #f8f1e5;
+        }
+
+        .dropdown.show .dropdown-menu {
+            display: block;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #7f5539;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links { display: none; }
+            .nav-links.active { 
+                display: flex; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 75px; 
+                right: 0; 
+                background: #e9bc60; 
+                width: 100%; 
+                padding: 20px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fondo"></div>
+
+    <nav class="navbar">
+        <a href="generos_admin.html" style="text-decoration: none; display: flex; align-items: center; gap: 12px;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
+                <span>Libruarys</span>
+            </div>
+        </a>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+    <!-- Géneros dropdown -->
+    <li class="dropdown" id="generosDropdown">
+        <span class="material-symbols-outlined" style="color:#7f5539;">library_books</span>
+        <a href="#" onclick="toggleDropdown(event)">Géneros ▾</a>
+        <ul class="dropdown-menu">
+            <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
+            <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
+            <li><a href="../html/catalogo_aventura_admin.html">Aventura</a></li>
+            <li><a href="../html/catalogo_ciencia_ficcion_admin.html">Ciencia Ficción</a></li>
+            <li><a href="../html/catalogo_suspenso_admin.html">Suspenso</a></li>
+            <li><a href="../html/catalogo_drama_admin.html">Drama</a></li>
+            <li><a href="../html/catalogo_infantil_admin.html">Infantil</a></li>
+            <li><a href="../html/catalogo_misterio_admin.html">Misterio</a></li>
+            <li><a href="../html/catalogo_romance_admin.html">Romance</a></li>
+        </ul>
+    </li>
+
+    <!-- NUEVO DROPDOWN: Admin -->
+    <li class="dropdown" id="adminDropdown">
+        <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
+        <a href="#" onclick="toggleDropdownAdmin(event)">Admin ▾</a>
+        <ul class="dropdown-menu">
+            <li><a href="historial_compras_admin.html">📋 Historial de compras</a></li>
+            <li><a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();">🚪 Cerrar sesión</a></li>
+        </ul>
+    </li>
+</ul>
+    </nav>
+
+    <script>
+    function toggleMenu(){
+        document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    function toggleDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById("generosDropdown");
+        dropdown.classList.toggle("show");
+    }
+
+    function toggleDropdownAdmin(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById("adminDropdown");
+        dropdown.classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown a')) {
+            const dropdowns = document.getElementsByClassName("dropdown");
+            for (let i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i].classList.contains('show')) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+    <!-- Contenido principal: tabla de órdenes -->
+    <div class="contenedor" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <h1 style="text-align: center; color: #5d4037;">Historial de compras</h1>
+        <table id="tabla-ordenes" border="1" style="width: 100%; border-collapse: collapse; background: white;">
+            <thead>
+                <tr style="background-color: #e9dfc8;">
+                    <th>ID Orden</th>
+                    <th>Cliente</th>
+                    <th>Libro</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Librería</th>
+                </tr>
+            </thead>
+            <tbody id="ordenes-body">
+                <tr><td colspan="7" style="text-align: center;">Cargando datos...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function cargarOrdenes() {
+            try {
+                const response = await fetch('http://localhost:8080/api/ordenes');
+                const ordenes = await response.json();
+                const tbody = document.getElementById('ordenes-body');
+                tbody.innerHTML = '';
+
+                for (const orden of ordenes) {
+                    const clienteRes = await fetch(`http://localhost:8080/api/usuarios/${orden.idCliente}`);
+                    const cliente = await clienteRes.json();
+
+                    const libroRes = await fetch(`http://localhost:8080/api/libros/${orden.idLibro}`);
+                    const libro = await libroRes.json();
+
+                    const libreriaRes = await fetch(`http://localhost:8080/api/librerias/${orden.idLibreria}`);
+                    const libreria = await libreriaRes.json();
+
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td style="padding: 8px;">${orden.id}</td>
+                        <td style="padding: 8px;">${cliente.nombre} ${cliente.apellidos || ''}</td>
+                        <td style="padding: 8px;">${libro.titulo}</td>
+                        <td style="padding: 8px; text-align: center;">${orden.cantidad}</td>
+                        <td style="padding: 8px;">$${orden.total}</td>
+                        <td style="padding: 8px;">${orden.fechaCreacion}</td>
+                        <td style="padding: 8px;">${libreria.contacto} (${libreria.ciudad})</td>
+                    `;
+                    tbody.appendChild(fila);
+                }
+            } catch (error) {
+                console.error('Error al cargar órdenes:', error);
+                document.getElementById('ordenes-body').innerHTML = '<tr><td colspan="7">Error al cargar datos. Verifica que el backend esté corriendo.</td></tr>';
+            }
+        }
+
+        cargarOrdenes();
+    </script>
+</body>
+</html>

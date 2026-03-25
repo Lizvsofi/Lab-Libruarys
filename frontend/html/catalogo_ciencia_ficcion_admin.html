@@ -68,6 +68,10 @@
             margin: 2px 0;
             line-height: 1.2;
         }
+        .nav-links li:last-child .dropdown-menu {
+        left: auto;
+        right: 0;
+    }
         .logo-admin-link {
             text-decoration: none; 
             color: inherit;         
@@ -92,28 +96,34 @@
 
         <div class="hamburger-admin" onclick="toggleMenu()">☰</div>
 
-        <ul class="nav-admin-links" id="navLinks">
-            <li class="nav-admin-item dropdown-admin" id="generosDropdown">
-                <span class="material-symbols-outlined" style="color: #7f5539;">library_books</span>
-                <a href="#" style="color: #7f5539;" onclick="toggleDropdown(event)">Géneros ▾</a>
-                <ul class="dropdown-admin-menu">
-                    <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
-                    <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
-                    <li><a href="../html/catalogo_aventura_admin.html">Aventura</a></li>
-                    <li><a href="../html/catalogo_ciencia_ficcion_admin.html">Ciencia Ficción</a></li>
-                    <li><a href="../html/catalogo_suspenso_admin.html">Suspenso</a></li>
-                    <li><a href="../html/catalogo_drama_admin.html">Drama</a></li>
-                    <li><a href="../html/catalogo_infantil_admin.html">Infantil</a></li>
-                    <li><a href="../html/catalogo_misterio_admin.html">Misterio</a></li>
-                    <li><a href="../html/catalogo_romance_admin.html">Romance</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-admin-item">
-                <span class="material-symbols-outlined" style="color: #d32f2f;">logout</span>
-                <a href="index.html" class="btn-admin-salir" onclick="localStorage.clear();">Cerrar Sesión</a>
-            </li>
+        <ul class="nav-links" id="navLinks">
+    <!-- Géneros dropdown (sin cambios) -->
+    <li class="dropdown" id="generosDropdown">
+        <span class="material-symbols-outlined" style="color:#7f5539;">library_books</span>
+        <a href="#" onclick="toggleDropdown(event)">Géneros ▾</a>
+        <ul class="dropdown-menu">
+            <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
+            <li><a href="../html/catalogo_terror_admin.html">Terror</a></li>
+            <li><a href="../html/catalogo_aventura_admin.html">Aventura</a></li>
+            <li><a href="../html/catalogo_ciencia_ficcion_admin.html">Ciencia Ficción</a></li>
+            <li><a href="../html/catalogo_suspenso_admin.html">Suspenso</a></li>
+            <li><a href="../html/catalogo_drama_admin.html">Drama</a></li>
+            <li><a href="../html/catalogo_infantil_admin.html">Infantil</a></li>
+            <li><a href="../html/catalogo_misterio_admin.html">Misterio</a></li>
+            <li><a href="../html/catalogo_romance_admin.html">Romance</a></li>
         </ul>
+    </li>
+
+    <!-- NUEVO DROPDOWN: Admin -->
+    <li class="dropdown" id="adminDropdown">
+        <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
+        <a href="#" onclick="toggleDropdownAdmin(event)">Admin ▾</a>
+        <ul class="dropdown-menu">
+            <li><a href="../html/historial_compras_admin.html">📋 Historial de compras</a></li>
+            <li><a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();">🚪 Cerrar sesión</a></li>
+        </ul>
+    </li>
+</ul>
     </nav>
 
     <h1 style="text-align: center; color: #5d4037; margin-top: 20px;">Catálogo Ciencia Ficción</h1>
@@ -149,18 +159,31 @@
         const ID_LIBRERIA = 133; // ID fijo de sucursal
 
         function toggleMenu(){
-            document.getElementById("navLinks").classList.toggle("active");
-        }
-        function toggleDropdown(event) {
-            event.preventDefault();
-            document.getElementById("generosDropdown").classList.toggle("show");
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-admin a')) {
-                const drop = document.getElementById("generosDropdown");
-                if(drop && drop.classList.contains('show')) drop.classList.remove('show');
+        document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    function toggleDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById("generosDropdown");
+        dropdown.classList.toggle("show");
+    }
+
+    function toggleDropdownAdmin(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById("adminDropdown");
+        dropdown.classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown a')) {
+            const dropdowns = document.getElementsByClassName("dropdown");
+            for (let i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i].classList.contains('show')) {
+                    dropdowns[i].classList.remove('show');
+                }
             }
         }
+    }
 
         async function cargarLibros() {
             try {
