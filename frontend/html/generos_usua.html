@@ -66,6 +66,8 @@
 
             .logo img {
                 height: 50px;
+                border: 2px solid white;
+                border-radius: 50%;
             }
 
             /* --- ESTILOS DEL MENÚ DESPLEGABLE (DROPDOWN) --- */
@@ -74,14 +76,16 @@
                 position: absolute;
                 top: 100%;
                 left: 0;
-                background-color: #fff;
+                background-color: #e9dfc8;
                 min-width: 160px;
                 box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
                 list-style: none;
                 padding: 10px 0;
                 margin: 0;
                 border-radius: 4px;
+        
             }
+           
 
             .dropdown-menu li {
                 display: block;
@@ -95,7 +99,7 @@
             }
 
             .dropdown-menu li:hover {
-                background-color: #f1f1f1;
+                background-color: #cfb68e;
             }
 
             /* Clase que activa el despliegue */
@@ -119,9 +123,9 @@
 
     <nav class="navbar">
         <a href="generos_usua.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
-            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <div class="logo" style="display: flex; align-items:center;  gap:10px;">
                 <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
-                <span style="font-weight: bold; font-size: 1.2rem; color: #7f5539;">Libruarys</span>
+                <span style="font-family: poppins, sans-serif; font-weight: bold; font-size: 1.2rem; color: #b8860B;">Libruarys</span>
             </div>
         </a>
 
@@ -148,15 +152,15 @@
             </li>
 
             <li>
-                <span class="material-symbols-outlined" style="color:#7f5539;">shopping_cart</span>
+                <span class="material-symbols-outlined dropdown" style="color: #7f5539;">shopping_cart</span>
                 <a href="../html/carrito_usua.html">
                     Carrito <span id="contador-carrito">0</span>
                 </a>
             </li>
 
             <li>
-                <span class="material-symbols-outlined" style="color: #ff4d4d;">logout</span>
-                <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" style="color: #ff4d4d; font-weight: bold;">
+                <span class="material-symbols-outlined" style="color: #7f5539;">logout</span>
+                <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
                     Cerrar Sesión
                 </a>
             </li>
@@ -190,7 +194,7 @@
     </script>
 
     <h1 class="titulogen">Géneros</h1> 
-    <h2 class="descripción" style="text-align: center; color: #7f5539;">Selecciona el género</h2>
+    <h2 class="descripción" style="text-align: center; color: #c79000;">Selecciona el género</h2>
 
     <div class="contenedor-generos">
         <a href="../html/catalogo_accion_usua.html" class="card">
