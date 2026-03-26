@@ -33,9 +33,10 @@ body {
 }
   
   .nav-links a {
-    color: #3e2c23;
+    color: #7f5539;
     text-decoration: none;
     font-weight: 500;
+    font-family: "poppins", sans-serif;;
   }
   
   .nav-links a:hover {
@@ -126,13 +127,15 @@ body {
     }
 
   .titulogen {
-  font-family: "Arial", cursive;
+  font-family: "poppins", sans-serif;
   font-weight: bold;
   height: auto;
   font-style: italic;
-  text-align: left;
-  font-size: 6em;
+  text-align: center;
+  font-size: 4em;
   margin-top: 40px;
+  color:#B8860B;
+
 }
 
 /*Tipos de géneros*/
@@ -214,9 +217,6 @@ transform:scale(1.03);
     border-radius:5px;
 }
 
-.autor{
-    color:#555;
-}
 
 .precio{
     font-weight:bold;
@@ -451,10 +451,7 @@ margin:0;
 font-size:18px;
 }
 
-.editorial{
-font-size:13px;
-color:#666;
-}
+
 
 /*Pedidos administrador*/
 .orden{

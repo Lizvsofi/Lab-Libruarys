@@ -33,9 +33,10 @@ body {
 }
   
   .nav-links a {
-    color: #3e2c23;
+    color: #7f5539;
     text-decoration: none;
     font-weight: 500;
+    font-family: "poppins", sans-serif;;
   }
   
   .nav-links a:hover {
@@ -127,14 +128,16 @@ body {
 
   /*titulo de genero*/
   .titulogen {
-  font-family: "Arial", cursive;
+  font-family: poppins, sans-serif;
   font-weight: bold;
   height: auto;
   font-style: italic;
-  text-align: left;
-  font-size: 6em;
-  margin-top: 40px;
+  text-align: center;
+  font-size: 4em;
+  margin-top: 20px;
+  color:#b8860B;
 }
+
 
 /*Tipos de géneros*/
 .contenedor-generos{
