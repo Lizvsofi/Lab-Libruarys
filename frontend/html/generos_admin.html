@@ -120,6 +120,53 @@
                 .nav-links { display: none; }
                 .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 70px; right: 0; background: #fff; width: 100%; padding: 20px; }
             }
+            /* --- AJUSTES PARA QUE EL DROPDOWN NO SE SALGA DE LA PANTALLA --- */
+
+/* Para el dropdown de Admin específicamente */
+#adminDropdown .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/* Ajustes generales para todos los dropdowns */
+.dropdown-menu {
+    left: auto;
+    right: 0;
+    max-width: 90vw; /* Evita que sea más ancho que la pantalla */
+}
+
+/* Para pantallas móviles */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed; /* Fijo en móvil para mejor control */
+        top: auto;
+        right: 10px;
+        left: auto;
+        min-width: 180px;
+        max-width: calc(100% - 20px); /* Deja margen de 10px a cada lado */
+    }
+    
+    /* Ajuste para que no se salga por arriba en móvil */
+    .dropdown.show .dropdown-menu {
+        top: 60px; /* Ajusta según la altura de tu navbar */
+    }
+    
+    /* Opcional: si el dropdown está cerca del borde inferior */
+    .dropdown-menu li a {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+/* Asegura que en pantallas muy pequeñas no se salga */
+@media (max-width: 480px) {
+    .dropdown-menu {
+        right: 5px;
+        left: 5px;
+        width: auto;
+        min-width: unset;
+    }
+}
         </style>
     </head>
 <body>
@@ -160,20 +207,32 @@
                     Cerrar Sesión
                 </a>
             </li>
+            <!-- NUEVO DROPDOWN: Admin -->
+            <li class="dropdown" id="adminDropdown">
+                <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
+                <a href="#" onclick="toggleDropdownAdmin(event)">Gestión</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <span class="material-symbols-outlined dropdown" style="color: #7f5539;">history</span>
+                        <a href="historial_compras_admin.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
+                            Historial de Ordenes
+                        </a>
+                    </li>
+                    <li>
+                        <span class="material-symbols-outlined dropdown" style="color: #7f5539;">logout</span>
+                        <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
+                            Cerrar Sesión
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
         </ul>
-    </li>
+   </nav>
 
-    <!-- NUEVO DROPDOWN: Admin -->
-    <li class="dropdown" id="adminDropdown">
-        <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
-        <a href="#" onclick="toggleDropdownAdmin(event)">Admin ▾</a>
-        <ul class="dropdown-menu">
-            <li><a href="../html/historial_compras_admin.html">📋 Historial de compras</a></li>
-            <li><a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();">🚪 Cerrar sesión</a></li>
-        </ul>
-    </li>
-</ul>
-    </nav>
+ 
+
+
 
     <script>
     function toggleMenu(){
@@ -201,6 +260,7 @@
                 }
             }
         }
+    }
     </script>
 
     <h1 class="titulogen" >Gestión de librería</h1> 
@@ -244,5 +304,5 @@
             <div class="titulo">Romance</div>
         </a>
     </div>
-</body>
+ </body>
 </html>

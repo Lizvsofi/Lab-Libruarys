@@ -152,16 +152,63 @@
             margin: 2px 0;
             line-height: 1.2;
         }
+        /* --- AJUSTES PARA QUE EL DROPDOWN NO SE SALGA DE LA PANTALLA --- */
+
+/* Para el dropdown de Admin específicamente */
+#adminDropdown .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/* Ajustes generales para todos los dropdowns */
+.dropdown-menu {
+    left: auto;
+    right: 0;
+    max-width: 90vw; /* Evita que sea más ancho que la pantalla */
+}
+
+/* Para pantallas móviles */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed; /* Fijo en móvil para mejor control */
+        top: auto;
+        right: 10px;
+        left: auto;
+        min-width: 180px;
+        max-width: calc(100% - 20px); /* Deja margen de 10px a cada lado */
+    }
+    
+    /* Ajuste para que no se salga por arriba en móvil */
+    .dropdown.show .dropdown-menu {
+        top: 60px; /* Ajusta según la altura de tu navbar */
+    }
+    
+    /* Opcional: si el dropdown está cerca del borde inferior */
+    .dropdown-menu li a {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+/* Asegura que en pantallas muy pequeñas no se salga */
+@media (max-width: 480px) {
+    .dropdown-menu {
+        right: 5px;
+        left: 5px;
+        width: auto;
+        min-width: unset;
+    }
+}
     </style>
 </head>
 <body>
     <div class="fondo"></div>
 
-    <nav class="navbar ">
-        <a href="generos_admin.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+    <nav class="navbar">
+        <a href="generos_admin.html" style="text-decoration: none; display: flex; align-items: center; gap: 10x;">
             <div class="logo" style="display: flex; align-items: center; gap: 10px;">
                 <img src="../img/logo_libreria.jpeg" alt="Logo de Libruarys"/>
-                <span style="font-family:poppins, sans-serif ; font-weight:bold; font-size:1.2rem; color: #b8860b">Libruarys </span>
+                <span style="font-family:poppins, sans-serif ; font-weight:bold; font-size:1.2rem; color: #b8860b">Libruarys</span>
             </div>
         </a>
 
@@ -170,8 +217,9 @@
         </div>
 
         <ul class="nav-links" id="navLinks">
+            <!-- Géneros dropdown -->
             <li class="dropdown" id="generosDropdown">
-                <span class="material-symbols-outlined dropdown" style="color:#7f5539;">library_books</span>
+                <span class="material-symbols-outlined" style="color:#7f5539;">library_books</span>
                 <a href="#" onclick="toggleDropdown(event)">Géneros ▾</a>
                 <ul class="dropdown-menu">
                     <li><a href="../html/catalogo_accion_admin.html">Acción</a></li>
@@ -186,26 +234,27 @@
                 </ul>
             </li>
 
-            <li>
-                <span class="material-symbols-outlined dropdown" style="color: #7f5539;">logout</span>
-                <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
-                    Cerrar Sesión
-                </a>
+            <!-- NUEVO DROPDOWN: Admin -->
+            <li class="dropdown" id="adminDropdown">
+                <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
+                <a href="#" onclick="toggleDropdownAdmin(event)">Gestión</a>
+                <ul class="dropdown-menu">
+                     <li>
+                        <span class="material-symbols-outlined dropdown" style="color: #7f5539;">history</span>
+                        <a href="historial_compras_admin.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
+                            Historial de Ordenes
+                        </a>
+                    </li>
+                    <li>
+                        <span class="material-symbols-outlined dropdown" style="color: #7f5539;">logout</span>
+                        <a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();" class="dropdown">
+                            Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
             </li>
-        </ul>
-    </li>
-
-    <!-- NUEVO DROPDOWN: Admin -->
-    <li class="dropdown" id="adminDropdown">
-        <span class="material-symbols-outlined" style="color:#7f5539;">admin_panel_settings</span>
-        <a href="#" onclick="toggleDropdownAdmin(event)">Admin ▾</a>
-        <ul class="dropdown-menu">
-            <li><a href="../html/historial_compras_admin.html">📋 Historial de compras</a></li>
-            <li><a href="index.html" onclick="localStorage.clear(); sessionStorage.clear();">🚪 Cerrar sesión</a></li>
-        </ul>
-    </li>
-</ul>
-    </nav>
+      </ul>
+</nav>
 
     <h1 style="font-family: poppins,sans-serif; font-weight: bold; font-size: 3rem; text-align: center; color: #b8860B; margin-bottom: 30px;">Catálogo Ciencia Ficción</h1>
 
